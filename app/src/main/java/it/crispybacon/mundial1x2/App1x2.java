@@ -2,6 +2,8 @@ package it.crispybacon.mundial1x2;
 
 import android.app.Application;
 
+import com.google.firebase.FirebaseApp;
+
 import it.crispybacon.mundial1x2.core.Core;
 
 /**
@@ -20,6 +22,6 @@ public class App1x2 extends Application {
     public void onCreate() {
         super.onCreate();
 
-        Core.get().setup(this);
+        Core.get().setup(this, FirebaseApp.getInstance());
     }
 }

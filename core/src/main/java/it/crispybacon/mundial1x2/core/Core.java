@@ -3,6 +3,8 @@ package it.crispybacon.mundial1x2.core;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
+import com.google.firebase.FirebaseApp;
+
 /**
  * Created by Jameido on 14/06/2018.
  */
@@ -24,6 +26,8 @@ public class Core {
 
     private Core() {
     }
+
+    private FirebaseApp mFirebaseApp;
 
     private AuthCredentialsReader mAuthCredentialsReader = new AuthCredentialsReader() {
         @Override
@@ -53,20 +57,10 @@ public class Core {
         }
     };
 
-    public String getBaseUrl() {
-        return BASE_URL;
-    }
-
-    public AuthCredentialsReader getAuthCredentialsReader() {
-        return mAuthCredentialsReader;
-    }
-
-    public AuthTokenWriter getAuthTokenWriter() {
-        return mAuthTokenWriter;
-    }
-
-    public void setup(final Context context) {
+    public void setup(final Context context, final FirebaseApp firebaseApp) {
         final Context vContext = context.getApplicationContext();
+
+        mFirebaseApp = firebaseApp;
 
         mAuthCredentialsReader = new AuthCredentialsReader() {
             @Override
@@ -96,6 +90,22 @@ public class Core {
 
             }
         };
+    }
+
+    public FirebaseApp getFirebaseApp() {
+        return mFirebaseApp;
+    }
+
+    public String getBaseUrl() {
+        return BASE_URL;
+    }
+
+    public AuthCredentialsReader getAuthCredentialsReader() {
+        return mAuthCredentialsReader;
+    }
+
+    public AuthTokenWriter getAuthTokenWriter() {
+        return mAuthTokenWriter;
     }
 
     public interface AuthCredentialsReader {
