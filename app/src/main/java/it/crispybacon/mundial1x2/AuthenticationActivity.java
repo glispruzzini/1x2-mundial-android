@@ -3,7 +3,6 @@ package it.crispybacon.mundial1x2;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ActionMode;
 import android.support.v7.widget.AppCompatEditText;
@@ -62,7 +61,7 @@ public class AuthenticationActivity extends Activity1x2
     @Override
     public void onSuccess(AuthResult authResult) {
         hideLoadingDialog();
-        showSnackBar(findViewById(R.id.view_root), getString(R.string.auth_success));
+        startActivity(HomeActivity.getStartIntent(this));
     }
 
     @Override
@@ -74,7 +73,7 @@ public class AuthenticationActivity extends Activity1x2
     private void login() {
         if (validateFields()) {
             showLoadingDialog();
-            Authentication.getInstance()
+            Authentication.get()
                     .login(
                             mEditEmail.getText().toString(),
                             mEditPassword.getText().toString()
@@ -87,7 +86,7 @@ public class AuthenticationActivity extends Activity1x2
     private void register() {
         if (validateFields()) {
             showLoadingDialog();
-            Authentication.getInstance()
+            Authentication.get()
                     .register(
                             mEditEmail.getText().toString(),
                             mEditPassword.getText().toString()

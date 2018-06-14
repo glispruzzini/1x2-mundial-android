@@ -15,7 +15,7 @@ public class Authentication {
 
     private static Authentication sInstance;
 
-    public static Authentication getInstance() {
+    public static Authentication get() {
         return sInstance == null ? sInstance = new Authentication() : sInstance;
     }
 
@@ -37,9 +37,13 @@ public class Authentication {
                 .signInWithEmailAndPassword(email, passowrd);
     }
 
-    public Task<GetTokenResult> getToken() throws Exception {
-        FirebaseUser vFirebaseUser = getFirebaseAuth()
+    public FirebaseUser getUser() {
+        return getFirebaseAuth()
                 .getCurrentUser();
+    }
+
+    public Task<GetTokenResult> getToken() throws Exception {
+        FirebaseUser vFirebaseUser = getUser();
         if (vFirebaseUser == null) {
             throw new Exception("Need a logged user to get a token, please login or register");
         } else {
