@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_size_biggest">60sp</dimen>
+    <dimen name="text_size_very_big">35sp</dimen>
+    <dimen name="text_size_big">32sp</dimen>
+    <dimen name="text_size_medium_big">24sp</dimen>
+    <dimen name="text_size_medium">20sp</dimen>
+    <dimen name="text_size_medium_small">18sp</dimen>
+    <dimen name="text_size_small">16sp</dimen>
+    <dimen name="text_size_very_small">14sp</dimen>
+    <dimen name="text_size_smallest">12sp</dimen>
+
+
+    <dimen name="very_big_margin">50dp</dimen>
+    <dimen name="extra_margin">40dp</dimen>
+    <dimen name="big_margin">30dp</dimen>
+    <dimen name="mid_margin">24dp</dimen>
+    <dimen name="mid_small_margin">20dp</dimen>
+    <dimen name="small_margin">15dp</dimen>
+    <dimen name="smaller_margin">12dp</dimen>
+
+</resources>
