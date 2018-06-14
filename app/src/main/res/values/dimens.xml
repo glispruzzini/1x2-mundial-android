@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <dimen name="text_size_biggest">60sp</dimen>
     <dimen name="text_size_very_big">35sp</dimen>
     <dimen name="text_size_big">32sp</dimen>
@@ -18,5 +19,11 @@
     <dimen name="mid_small_margin">20dp</dimen>
     <dimen name="small_margin">15dp</dimen>
     <dimen name="smaller_margin">12dp</dimen>
+
+    <dimen name="icon_profile">120dp</dimen>
+    <dimen name="icon_flag_width">100dp</dimen>
+    <dimen name="icon_flag_height">60dp</dimen>
+    <dimen name="icon">50dp</dimen>
+
 
 </resources>
