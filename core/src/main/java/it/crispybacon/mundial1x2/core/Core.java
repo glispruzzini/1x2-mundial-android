@@ -1,9 +1,13 @@
 package it.crispybacon.mundial1x2.core;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.google.firebase.FirebaseApp;
+import com.squareup.moshi.Moshi;
+
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
 
 /**
  * Created by Jameido on 14/06/2018.
@@ -29,6 +33,13 @@ public class Core {
 
     private FirebaseApp mFirebaseApp;
 
+    private OkHttpClient mAuthHttpClient = new OkHttpClient();
+    private OkHttpClient mNoAuthHttpClient = new OkHttpClient();
+
+    private Moshi mMoshi = new Moshi
+            .Builder()
+            .build();
+
     private AuthCredentialsReader mAuthCredentialsReader = new AuthCredentialsReader() {
         @Override
         public String getToken() {
@@ -50,6 +61,7 @@ public class Core {
             return null;
         }
     };
+
     private AuthTokenWriter mAuthTokenWriter = new AuthTokenWriter() {
         @Override
         public void writeAuthToken(String token) {
@@ -90,14 +102,43 @@ public class Core {
 
             }
         };
+
+        initOkHttpClient(context);
+    }
+
+    private void initOkHttpClient(final Context context) {
+
+        OkHttpClient.Builder vBuilder = new OkHttpClient.Builder()
+                .connectTimeout(60_000, TimeUnit.MILLISECONDS)
+                .readTimeout(60_000, TimeUnit.MILLISECONDS)
+                .writeTimeout(60_000, TimeUnit.MILLISECONDS);
+
+        mNoAuthHttpClient = vBuilder
+                .build();
+
+        mAuthHttpClient = vBuilder
+                .addInterceptor(new TokenInterceptor())
+                .build();
+    }
+
+    public String getBaseUrl() {
+        return BASE_URL;
     }
 
     public FirebaseApp getFirebaseApp() {
         return mFirebaseApp;
     }
 
-    public String getBaseUrl() {
-        return BASE_URL;
+    public OkHttpClient getAuthHttpClient() {
+        return mAuthHttpClient;
+    }
+
+    public OkHttpClient getNoAuthHttpClient() {
+        return mNoAuthHttpClient;
+    }
+
+    public Moshi getMoshi() {
+        return mMoshi;
     }
 
     public AuthCredentialsReader getAuthCredentialsReader() {

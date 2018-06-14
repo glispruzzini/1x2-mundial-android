@@ -1,6 +1,7 @@
 package it.crispybacon.mundial1x2.core.authentication;
 
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -9,7 +10,7 @@ import com.google.firebase.auth.GetTokenResult;
 import it.crispybacon.mundial1x2.core.Core;
 
 /**
- * Created by Luca Rossi on 14/06/2018.
+ * Created by Jameido on 14/06/2018.
  */
 public class Authentication {
 
@@ -42,10 +43,10 @@ public class Authentication {
                 .getCurrentUser();
     }
 
-    public Task<GetTokenResult> getToken() throws Exception {
+    public Task<GetTokenResult> getToken() {
         FirebaseUser vFirebaseUser = getUser();
         if (vFirebaseUser == null) {
-            throw new Exception("Need a logged user to get a token, please login or register");
+            return Tasks.forException(new Exception("Need a logged user to get a token, please login or register"));
         } else {
             return vFirebaseUser.getIdToken(true);
         }

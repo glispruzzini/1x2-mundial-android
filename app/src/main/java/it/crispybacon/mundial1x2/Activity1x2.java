@@ -11,7 +11,7 @@ import android.widget.Toast;
 import it.crispybacon.mundial1x2.controls.LoadingDialog;
 
 /**
- * Created by Luca Rossi on 15/06/2018.
+ * Created by Jameido on 15/06/2018.
  */
 public abstract class Activity1x2 extends AppCompatActivity {
 

@@ -14,7 +14,7 @@ import android.widget.RelativeLayout;
 import it.crispybacon.mundial1x2.R;
 
 /**
- * Created by Luca Rossi on 15/06/2018.
+ * Created by Jameido on 15/06/2018.
  */
 
 public class LoadingDialog extends Dialog {
