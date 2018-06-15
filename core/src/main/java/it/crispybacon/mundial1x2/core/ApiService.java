@@ -41,7 +41,7 @@ public class ApiService<S> {
         mRetrofit = new Retrofit.Builder()
                 .client(getHttpClient())
                 .baseUrl(getBaseUrl())
-                .addConverterFactory(MoshiConverterFactory.create())
+                .addConverterFactory(MoshiConverterFactory.create(Core.get().getMoshi()))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
