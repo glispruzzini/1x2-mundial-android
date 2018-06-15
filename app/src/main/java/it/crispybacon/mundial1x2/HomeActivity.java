@@ -2,12 +2,10 @@ package it.crispybacon.mundial1x2;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatTextView;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -15,9 +13,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import it.crispybacon.mundial1x2.core.apimodels.Bet;
 import it.crispybacon.mundial1x2.core.apimodels.Match;
+import it.crispybacon.mundial1x2.core.apimodels.SimpleResponse;
+import it.crispybacon.mundial1x2.core.bets.BetsApiService;
 import it.crispybacon.mundial1x2.core.macthes.MatchesApiService;
 import it.crispybacon.mundial1x2.ui.imageview.FlagImageView;
+import it.crispybacon.mundial1x2.ui.selector.BetSelectionView;
 import it.crispybacon.mundial1x2.ui.text.DateTextView;
 
 public class HomeActivity extends Activity1x2 {
@@ -31,8 +33,29 @@ public class HomeActivity extends Activity1x2 {
     private FlagImageView mFlagImageRight;
     private DateTextView mDateTextView;
     private AppCompatTextView mHourTextView;
+    private BetSelectionView mBetSelectionView;
 
     private Disposable mDisposableMatches;
+    private Disposable mDisposableBet;
+
+    private Match mShownMatch;
+
+    private BetSelectionView.OnBetSelectedListener mOnBetSelectedListener = new BetSelectionView.OnBetSelectedListener() {
+        @Override
+        public void onBetSelected1() {
+            placeBet(mShownMatch, Bet.BetResult.HOME);
+        }
+
+        @Override
+        public void onBetSelectedX() {
+            placeBet(mShownMatch, Bet.BetResult.TIE);
+        }
+
+        @Override
+        public void onBetSelected2() {
+            placeBet(mShownMatch, Bet.BetResult.AWAY);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +67,9 @@ public class HomeActivity extends Activity1x2 {
         mDateTextView = findViewById(R.id.text_date);
         mHourTextView = findViewById(R.id.text_hour);
 
+        mBetSelectionView = findViewById(R.id.bet_selection_view);
+        mBetSelectionView.setOnBetSelectedListener(mOnBetSelectedListener);
+
         getMatches();
     }
 
@@ -52,6 +78,9 @@ public class HomeActivity extends Activity1x2 {
         super.onDestroy();
         if (mDisposableMatches != null && !mDisposableMatches.isDisposed()) {
             mDisposableMatches.dispose();
+        }
+        if (mDisposableBet != null && !mDisposableBet.isDisposed()) {
+            mDisposableBet.dispose();
         }
     }
 
@@ -78,18 +107,41 @@ public class HomeActivity extends Activity1x2 {
 
     private void onMatchesLoaded(List<Match> matches) {
         if (matches != null && matches.size() > 0) {
-            Match vTestMatch = matches.get(0);
+            mShownMatch = matches.get(0);
             mFlagImageLeft.withFlag(R.drawable.flag_russia)
-                    .andText(vTestMatch.team1.name);
+                    .andText(mShownMatch.team1.name);
 
             mFlagImageRight.withFlag(R.drawable.flag_russia)
-                    .andText(vTestMatch.team2.name);
+                    .andText(mShownMatch.team2.name);
 
-            mDateTextView.setDate(vTestMatch.date);
+            mDateTextView.setDate(mShownMatch.date);
             SimpleDateFormat vSimpleDateFormat = new SimpleDateFormat("HH:mm", Locale.ITALY);
-            mHourTextView.setText(vSimpleDateFormat.format(vTestMatch.date));
+            mHourTextView.setText(vSimpleDateFormat.format(mShownMatch.date));
         } else {
             //TODO: show placeholder
+        }
+    }
+
+    private void placeBet(final Match match, final Bet.BetResult betResult) {
+        if (match != null) {
+            showLoadingDialog();
+            mDisposableBet = BetsApiService.get()
+                    .placeBet(match, betResult)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<SimpleResponse>() {
+                        @Override
+                        public void accept(SimpleResponse response) throws Exception {
+                            showSnackBar(findViewById(R.id.view_root), getString(R.string.bet_placed, betResult.toString()));
+                            hideLoadingDialog();
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            showSnackBar(findViewById(R.id.view_root), throwable.getMessage());
+                            hideLoadingDialog();
+                        }
+                    });
         }
     }
 }
