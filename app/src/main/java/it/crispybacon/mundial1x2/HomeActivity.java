@@ -1,5 +1,7 @@
 package it.crispybacon.mundial1x2;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatTextView;
@@ -13,6 +15,11 @@ import it.crispybacon.mundial1x2.ui.selector.BetSelectionView;
 import it.crispybacon.mundial1x2.ui.text.DateTextView;
 
 public class HomeActivity extends AppCompatActivity implements BetSelectionView.IBetSelection {
+
+    public static Intent getStartIntent(final Context context) {
+        Intent startIntent = new Intent(context, HomeActivity.class);
+        return startIntent;
+    }
 
     private FlagImageView mFlagImageLeft;
     private FlagImageView mFlagImageRight;
@@ -36,7 +43,7 @@ public class HomeActivity extends AppCompatActivity implements BetSelectionView.
         mBentBackgroundLayout = findViewById(R.id.bottom_container);
 
         init();
-        
+
         mBetSelectionView.setBetListener(this);
         mBentBackgroundLayout.post(new Runnable() {
             @Override
@@ -46,8 +53,7 @@ public class HomeActivity extends AppCompatActivity implements BetSelectionView.
         });
     }
 
-
-    private void init(){
+    private void init() {
 
         mFlagImageLeft.withFlag(R.drawable.flag_russia)
                 .andText("Russia");
