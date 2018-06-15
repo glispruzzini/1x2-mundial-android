@@ -25,7 +25,13 @@ public class BetSelectionView extends LinearLayout {
     private SectionView mCentralSection;
     private SectionView mRightSection;
 
+    private IBetSelection mBetListener;
     private int mSectionWidth;
+
+
+    public interface IBetSelection{
+        void onBetChoosen(int selectedSection);
+    }
 
     public BetSelectionView(Context context) {
         super(context);
@@ -67,6 +73,14 @@ public class BetSelectionView extends LinearLayout {
         mLeftSection.setBackground(getResources().getDrawable(R.drawable.flag_russia));
         addView(mLeftSection);
 
+        mLeftSection.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mBetListener!=null)
+                    mBetListener.onBetChoosen(100);
+            }
+        });
+
     }
 
     private void setupCentralSection(){
@@ -95,7 +109,21 @@ public class BetSelectionView extends LinearLayout {
 
         addView(mRightSection);
 
+        mRightSection.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mBetListener!=null)
+                    mBetListener.onBetChoosen(200);
+            }
+        });
+
     }
+
+    public void setBetListener(IBetSelection aBetListener){
+        mBetListener = aBetListener;
+    }
+
+
 
 
     private class SectionView extends RelativeLayout {
