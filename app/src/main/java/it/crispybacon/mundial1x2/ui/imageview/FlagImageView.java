@@ -3,6 +3,7 @@ package it.crispybacon.mundial1x2.ui.imageview;
 import android.content.Context;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
@@ -60,7 +61,7 @@ public class FlagImageView extends LinearLayout {
             params.gravity = Gravity.CENTER_HORIZONTAL;
             params.topMargin = (int) MeasureHelper.getPointsValueOfRes(getContext(),R.dimen.smaller_margin);
         mTextView.setLayoutParams(params);
-
+        mTextView.setTypeface(ResourcesCompat.getFont(getContext(), R.font.montserrat_regular));
         addView(mTextView);
     }
 

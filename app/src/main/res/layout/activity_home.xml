@@ -2,6 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/view_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -55,17 +56,18 @@
                         android:id="@+id/text_user_name"
                         android:textSize="@dimen/text_size_medium_big"
                         android:textColor="@color/colorPrimaryDark"
+                        android:fontFamily="@font/montserrat_semibold"
                         android:layout_marginTop="@dimen/mid_margin"/>
 
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Partite di oggi"
-                        android:layout_below="@+id/text_user_name"
+                        android:text="@string/home_today_matches"
+                        android:layout_marginTop="@dimen/small_margin"
                         android:textSize="@dimen/text_size_very_small"
                         android:textColor="@color/colorGrey"
-                        android:layout_marginTop="@dimen/small_margin"
-                        android:layout_centerHorizontal="true"/>
+                        android:fontFamily="@font/montserrat_regular"
+                        android:textAllCaps="true"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -74,7 +76,6 @@
                         android:background="@color/colorLightGrey"/>
 
                 </LinearLayout>
-
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -93,8 +94,27 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/small_margin"
+                        android:layout_marginEnd="@dimen/small_margin"
+                        android:layout_gravity="center"
                         android:orientation="vertical">
 
+                        <it.crispybacon.mundial1x2.ui.text.DateTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:id="@+id/text_date"/>
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:id="@+id/text_hour"
+                            android:layout_marginTop="@dimen/small_margin"
+                            android:textSize="@dimen/text_size_medium"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/montserrat_semibold"
+                            tools:text="20:00"/>
 
                     </LinearLayout>
 
@@ -104,6 +124,17 @@
                         android:id="@+id/img_right_team"/>
 
                 </LinearLayout>
+
+                <it.crispybacon.mundial1x2.ui.selector.BetSelectionView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/bet_selection_view"
+                    android:layout_below="@+id/match_info_container"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="visible"
+                    android:layout_margin="@dimen/big_margin"
+                    android:gravity="center"/>
 
             </RelativeLayout>
 
