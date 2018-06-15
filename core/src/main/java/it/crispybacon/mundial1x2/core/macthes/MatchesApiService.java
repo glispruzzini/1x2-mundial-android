@@ -1,8 +1,11 @@
 package it.crispybacon.mundial1x2.core.macthes;
 
+import java.util.List;
+
 import io.reactivex.Observable;
 import it.crispybacon.mundial1x2.core.ApiService;
 import it.crispybacon.mundial1x2.core.Core;
+import it.crispybacon.mundial1x2.core.apimodels.Match;
 import okhttp3.ResponseBody;
 
 /**
@@ -23,7 +26,7 @@ public class MatchesApiService extends ApiService<MatchesApi> {
         return super.getService(MatchesApi.class);
     }
 
-    public Observable<ResponseBody> getMatches() {
+    public Observable<List<Match>> getMatches() {
         return getService()
                 .getMatches();
     }
