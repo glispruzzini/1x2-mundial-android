@@ -1,5 +1,7 @@
 package it.crispybacon.mundial1x2;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatTextView;
@@ -11,11 +13,15 @@ import it.crispybacon.mundial1x2.ui.text.DateTextView;
 
 public class HomeActivity extends AppCompatActivity {
 
+    public static Intent getStartIntent(final Context context) {
+        Intent startIntent = new Intent(context, HomeActivity.class);
+        return startIntent;
+    }
+
     private FlagImageView mFlagImageLeft;
     private FlagImageView mFlagImageRight;
     private DateTextView mDateTextView;
     private AppCompatTextView mHourTextView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +37,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-
-    private void init(){
+    private void init() {
 
         mFlagImageLeft.withFlag(R.drawable.flag_russia)
                 .andText("Russia");
