@@ -28,7 +28,8 @@ public class TokenInterceptor implements Interceptor {
         }
 
         request = builder.build(); //overwrite old request
-        return chain.proceed(request);
+        Response vResponse = chain.proceed(request);
+        return vResponse;
     }
 
     private void setAuthHeader(Request.Builder builder, String token) {

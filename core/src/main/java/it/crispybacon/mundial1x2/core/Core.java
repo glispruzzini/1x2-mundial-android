@@ -4,9 +4,12 @@ import android.content.Context;
 
 import com.google.firebase.FirebaseApp;
 import com.squareup.moshi.Moshi;
+import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter;
 
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import it.crispybacon.mundial1x2.core.apimodels.Bet;
 import okhttp3.OkHttpClient;
 
 /**
@@ -38,6 +41,7 @@ public class Core {
 
     private Moshi mMoshi = new Moshi
             .Builder()
+            .add(Date.class, new Rfc3339DateJsonAdapter())
             .build();
 
     private AuthCredentialsReader mAuthCredentialsReader = new AuthCredentialsReader() {

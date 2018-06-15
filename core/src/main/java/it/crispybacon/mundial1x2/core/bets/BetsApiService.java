@@ -5,7 +5,7 @@ import it.crispybacon.mundial1x2.core.ApiService;
 import it.crispybacon.mundial1x2.core.Core;
 import it.crispybacon.mundial1x2.core.apimodels.Bet;
 import it.crispybacon.mundial1x2.core.apimodels.Match;
-import okhttp3.ResponseBody;
+import it.crispybacon.mundial1x2.core.apimodels.SimpleResponse;
 
 /**
  * Created by Jameido on 15/06/2018.
@@ -25,8 +25,8 @@ public class BetsApiService extends ApiService<BetsApi> {
         return super.getService(BetsApi.class);
     }
 
-    public Observable<ResponseBody> postBet(final Match match, final Bet.BetResult betResult) {
+    public Observable<SimpleResponse> placeBet(final Match match, final Bet.BetResult betResult) {
         return getService()
-                .postBet(new Bet(match, betResult));
+                .placeBet(new Bet(match, betResult));
     }
 }
