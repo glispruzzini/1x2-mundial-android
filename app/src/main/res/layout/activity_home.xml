@@ -61,12 +61,12 @@
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Partite di oggi"
-                        android:layout_below="@+id/text_user_name"
+                        android:text="@string/home_today_matches"
+                        android:layout_marginTop="@dimen/small_margin"
                         android:textSize="@dimen/text_size_very_small"
                         android:textColor="@color/colorGrey"
-                        android:layout_marginTop="@dimen/small_margin"
-                        android:layout_centerHorizontal="true"/>
+                        android:fontFamily="@font/montserrat_regular"
+                        android:textAllCaps="true"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -75,7 +75,6 @@
                         android:background="@color/colorLightGrey"/>
 
                 </LinearLayout>
-
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -113,6 +112,7 @@
                             android:layout_marginTop="@dimen/small_margin"
                             android:textSize="@dimen/text_size_medium"
                             android:textColor="@color/black"
+                            android:fontFamily="@font/montserrat_semibold"
                             tools:text="20:00"/>
 
                     </LinearLayout>
@@ -121,6 +121,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/img_right_team"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+
+
 
                 </LinearLayout>
 

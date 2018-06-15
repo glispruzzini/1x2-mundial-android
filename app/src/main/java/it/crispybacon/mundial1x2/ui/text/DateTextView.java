@@ -2,6 +2,7 @@ package it.crispybacon.mundial1x2.ui.text;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
@@ -55,6 +56,7 @@ public class DateTextView extends LinearLayout {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER_HORIZONTAL;
         mDayTextView.setLayoutParams(params);
+        mDayTextView.setTypeface(ResourcesCompat.getFont(getContext(), R.font.montserrat_regular));
 
         addView(mDayTextView);
     }
@@ -66,6 +68,7 @@ public class DateTextView extends LinearLayout {
         params.gravity = Gravity.CENTER_HORIZONTAL;
         params.topMargin = (int) MeasureHelper.getPointsValueOfRes(getContext(),R.dimen.small_margin)/2;
         mDateTextView.setLayoutParams(params);
+        mDateTextView.setTypeface(ResourcesCompat.getFont(getContext(), R.font.montserrat_regular));
 
         addView(mDateTextView);
     }
