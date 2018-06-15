@@ -124,16 +124,16 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <it.crispybacon.mundial1x2.ui.selector.BetSelectionView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-
-
-
-                </LinearLayout>
+                    android:id="@+id/bet_selection_view"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/mid_margin"
+                    android:layout_marginBottom="@dimen/big_margin"
+                    android:gravity="center"/>
 
             </RelativeLayout>
 
