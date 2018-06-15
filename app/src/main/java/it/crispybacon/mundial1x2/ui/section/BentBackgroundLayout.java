@@ -3,10 +3,7 @@ package it.crispybacon.mundial1x2.ui.section;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.Point;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.RelativeLayout;
 
 import it.crispybacon.mundial1x2.R;

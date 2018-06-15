@@ -13,8 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import it.crispybacon.mundial1x2.R;
-import it.crispybacon.mundial1x2.core.apimodels.Bet;
-import it.crispybacon.mundial1x2.ui.MeasureHelper;
 
 /**
  * Created by Enrico Cappozzo on 15/06/2018.
@@ -73,14 +71,6 @@ public class BetSelectionView extends LinearLayout {
         mLeftSection.setLayoutParams(params);
         //TODO get background res
         mLeftSection.setBackground(getResources().getDrawable(R.drawable.flag_russia));
-        mLeftSection.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mOnBetSelectedListener != null) {
-                    mOnBetSelectedListener.onBetSelected1();
-                }
-            }
-        });
         addView(mLeftSection);
 
         mLeftSection.setOnClickListener(new OnClickListener() {
@@ -106,9 +96,8 @@ public class BetSelectionView extends LinearLayout {
         mCentralSection.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mOnBetSelectedListener != null) {
-                    mOnBetSelectedListener.onBetSelectedX();
-                }
+                if(mBetListener!=null)
+                    mBetListener.onBetChoosen(200);
             }
         });
         addView(mCentralSection);
@@ -122,21 +111,13 @@ public class BetSelectionView extends LinearLayout {
         mRightSection.setLayoutParams(params);
         //TODO get background res
         mRightSection.setBackground(getResources().getDrawable(R.drawable.flag_russia));
-        mRightSection.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mOnBetSelectedListener != null) {
-                    mOnBetSelectedListener.onBetSelected2();
-                }
-            }
-        });
         addView(mRightSection);
 
         mRightSection.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(mBetListener!=null)
-                    mBetListener.onBetChoosen(200);
+                    mBetListener.onBetChoosen(300);
             }
         });
 
