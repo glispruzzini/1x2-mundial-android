@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatTextView;
+import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -19,10 +20,12 @@ import it.crispybacon.mundial1x2.core.apimodels.SimpleResponse;
 import it.crispybacon.mundial1x2.core.bets.BetsApiService;
 import it.crispybacon.mundial1x2.core.macthes.MatchesApiService;
 import it.crispybacon.mundial1x2.ui.imageview.FlagImageView;
+import it.crispybacon.mundial1x2.ui.section.BentBackgroundLayout;
+import it.crispybacon.mundial1x2.ui.selector.BetSelectionView;
 import it.crispybacon.mundial1x2.ui.selector.BetSelectionView;
 import it.crispybacon.mundial1x2.ui.text.DateTextView;
 
-public class HomeActivity extends Activity1x2 {
+public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSelection {
 
     public static Intent getStartIntent(final Context context) {
         Intent startIntent = new Intent(context, HomeActivity.class);
@@ -33,6 +36,9 @@ public class HomeActivity extends Activity1x2 {
     private FlagImageView mFlagImageRight;
     private DateTextView mDateTextView;
     private AppCompatTextView mHourTextView;
+    private BentBackgroundLayout mBentBackgroundLayout;
+
+    private static final String TAG = "HomeActivity";
     private BetSelectionView mBetSelectionView;
 
     private Disposable mDisposableMatches;
@@ -40,22 +46,6 @@ public class HomeActivity extends Activity1x2 {
 
     private Match mShownMatch;
 
-    private BetSelectionView.OnBetSelectedListener mOnBetSelectedListener = new BetSelectionView.OnBetSelectedListener() {
-        @Override
-        public void onBetSelected1() {
-            placeBet(mShownMatch, Bet.BetResult.HOME);
-        }
-
-        @Override
-        public void onBetSelectedX() {
-            placeBet(mShownMatch, Bet.BetResult.TIE);
-        }
-
-        @Override
-        public void onBetSelected2() {
-            placeBet(mShownMatch, Bet.BetResult.AWAY);
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +56,14 @@ public class HomeActivity extends Activity1x2 {
         mFlagImageRight = findViewById(R.id.img_right_team);
         mDateTextView = findViewById(R.id.text_date);
         mHourTextView = findViewById(R.id.text_hour);
-
         mBetSelectionView = findViewById(R.id.bet_selection_view);
-        mBetSelectionView.setOnBetSelectedListener(mOnBetSelectedListener);
+        mBentBackgroundLayout = findViewById(R.id.bottom_container);
+        mBetSelectionView = findViewById(R.id.bet_selection_view);
 
         getMatches();
+        mBetSelectionView.setBetListener(this);
     }
+
 
     @Override
     protected void onDestroy() {
@@ -143,5 +135,10 @@ public class HomeActivity extends Activity1x2 {
                         }
                     });
         }
+    }
+
+    @Override
+    public void onBetChoosen(Bet.BetResult aBetResult) {
+        placeBet(mShownMatch, aBetResult);
     }
 }
