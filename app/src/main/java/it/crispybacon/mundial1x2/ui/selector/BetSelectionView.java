@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import it.crispybacon.mundial1x2.R;
+import it.crispybacon.mundial1x2.core.apimodels.Bet;
 
 /**
  * Created by Enrico Cappozzo on 15/06/2018.
@@ -29,7 +30,7 @@ public class BetSelectionView extends LinearLayout {
 
 
     public interface IBetSelection{
-        void onBetChoosen(int selectedSection);
+        void onBetChoosen(Bet.BetResult aBetResult);
     }
 
     private OnBetSelectedListener mOnBetSelectedListener;
@@ -77,7 +78,7 @@ public class BetSelectionView extends LinearLayout {
             @Override
             public void onClick(View view) {
                 if(mBetListener!=null)
-                    mBetListener.onBetChoosen(100);
+                    mBetListener.onBetChoosen(Bet.BetResult.HOME);
             }
         });
 
@@ -97,7 +98,7 @@ public class BetSelectionView extends LinearLayout {
             @Override
             public void onClick(View v) {
                 if(mBetListener!=null)
-                    mBetListener.onBetChoosen(200);
+                    mBetListener.onBetChoosen(Bet.BetResult.TIE);
             }
         });
         addView(mCentralSection);
@@ -117,7 +118,7 @@ public class BetSelectionView extends LinearLayout {
             @Override
             public void onClick(View view) {
                 if(mBetListener!=null)
-                    mBetListener.onBetChoosen(300);
+                    mBetListener.onBetChoosen(Bet.BetResult.AWAY);
             }
         });
 

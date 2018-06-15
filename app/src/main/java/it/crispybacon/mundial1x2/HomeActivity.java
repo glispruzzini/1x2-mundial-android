@@ -46,22 +46,6 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
 
     private Match mShownMatch;
 
-    private BetSelectionView.OnBetSelectedListener mOnBetSelectedListener = new BetSelectionView.OnBetSelectedListener() {
-        @Override
-        public void onBetSelected1() {
-            placeBet(mShownMatch, Bet.BetResult.HOME);
-        }
-
-        @Override
-        public void onBetSelectedX() {
-            placeBet(mShownMatch, Bet.BetResult.TIE);
-        }
-
-        @Override
-        public void onBetSelected2() {
-            placeBet(mShownMatch, Bet.BetResult.AWAY);
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,19 +58,10 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
         mHourTextView = findViewById(R.id.text_hour);
         mBetSelectionView = findViewById(R.id.bet_selection_view);
         mBentBackgroundLayout = findViewById(R.id.bottom_container);
-
         mBetSelectionView = findViewById(R.id.bet_selection_view);
-        mBetSelectionView.setOnBetSelectedListener(mOnBetSelectedListener);
 
         getMatches();
-
         mBetSelectionView.setBetListener(this);
-        mBentBackgroundLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                //mBentBackgroundLayout.setupPosition();
-            }
-        });
     }
 
 
@@ -163,7 +138,7 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
     }
 
     @Override
-    public void onBetChoosen(int selectedSection) {
-        Log.d(TAG, "onBetChoosen: "+selectedSection);
+    public void onBetChoosen(Bet.BetResult aBetResult) {
+        placeBet(mShownMatch, aBetResult);
     }
 }
