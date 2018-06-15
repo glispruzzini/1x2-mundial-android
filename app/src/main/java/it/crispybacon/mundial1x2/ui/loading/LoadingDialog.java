@@ -1,15 +1,11 @@
-package it.crispybacon.mundial1x2.controls;
+package it.crispybacon.mundial1x2.ui.loading;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 
 import it.crispybacon.mundial1x2.R;
 

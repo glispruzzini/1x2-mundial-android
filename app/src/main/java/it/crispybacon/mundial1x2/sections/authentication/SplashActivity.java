@@ -1,9 +1,11 @@
-package it.crispybacon.mundial1x2;
+package it.crispybacon.mundial1x2.sections.authentication;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import it.crispybacon.mundial1x2.R;
 import it.crispybacon.mundial1x2.core.authentication.Authentication;
+import it.crispybacon.mundial1x2.sections.home.HomeActivity;
 
 public class SplashActivity extends AppCompatActivity {
 

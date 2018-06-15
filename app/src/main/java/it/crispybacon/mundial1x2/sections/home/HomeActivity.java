@@ -1,10 +1,9 @@
-package it.crispybacon.mundial1x2;
+package it.crispybacon.mundial1x2.sections.home;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatTextView;
-import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -14,6 +13,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import it.crispybacon.mundial1x2.Activity1x2;
+import it.crispybacon.mundial1x2.R;
 import it.crispybacon.mundial1x2.core.apimodels.Bet;
 import it.crispybacon.mundial1x2.core.apimodels.Match;
 import it.crispybacon.mundial1x2.core.apimodels.SimpleResponse;
@@ -21,7 +22,6 @@ import it.crispybacon.mundial1x2.core.bets.BetsApiService;
 import it.crispybacon.mundial1x2.core.macthes.MatchesApiService;
 import it.crispybacon.mundial1x2.ui.imageview.FlagImageView;
 import it.crispybacon.mundial1x2.ui.section.BentBackgroundLayout;
-import it.crispybacon.mundial1x2.ui.selector.BetSelectionView;
 import it.crispybacon.mundial1x2.ui.selector.BetSelectionView;
 import it.crispybacon.mundial1x2.ui.text.DateTextView;
 
