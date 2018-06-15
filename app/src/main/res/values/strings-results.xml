@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="results_title">Results</string>
+    <string name="results_guess_right">You got it!</string>
+    <string name="results_guess_wrong">Not this time</string>
+    <string name="results_points">Points</string>
+    <string name="results_hidden_score">0:0</string>
+</resources>
