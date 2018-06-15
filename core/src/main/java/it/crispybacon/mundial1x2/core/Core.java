@@ -15,7 +15,7 @@ import okhttp3.OkHttpClient;
 
 public class Core {
 
-    private static final String BASE_URL = "http://192.168.1.4:3082/";
+    private static final String BASE_URL = "https://1x2.iamdavi.de/";
 
     private static final String TAG = "Core";
 

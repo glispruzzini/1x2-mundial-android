@@ -33,6 +33,6 @@ public class TokenInterceptor implements Interceptor {
 
     private void setAuthHeader(Request.Builder builder, String token) {
         if (token != null) //Add Auth token to each request if authorized
-            builder.header("authToken", token);
+            builder.header("authorization", token);
     }
 }
