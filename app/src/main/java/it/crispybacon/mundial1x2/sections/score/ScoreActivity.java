@@ -23,6 +23,8 @@ public class ScoreActivity extends Activity1x2 {
     private AppCompatTextView mTextPlaceHolder;
     private RecyclerView mRecyclerView;
 
+    private ScoreAdapter mScoreAdapter;
+
     public static Intent getStartIntent(final Context context) {
         Intent startIntent = new Intent(context, ScoreActivity.class);
         return startIntent;
@@ -48,24 +50,25 @@ public class ScoreActivity extends Activity1x2 {
         mTextPlaceHolder.setVisibility(View.GONE);
 
         LinearLayoutManager vLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        mScoreAdapter = new ScoreAdapter(this);
         mRecyclerView.setLayoutManager(vLayoutManager);
-        //mRecyclerView.setAdapter(mResultsAdapter);
+        mRecyclerView.setAdapter(mScoreAdapter);
 
-        getScores();
+        getScoresList();
     }
 
-    private void getScores() {
+    private void getScoresList() {
         //TODO: call API via Core
-        onScoresReceived(new ArrayList<Result>());
+        onScoresReceived(new ArrayList<Score>());
     }
 
 
-    private void onScoresReceived(ArrayList<Result> results){
+    private void onScoresReceived(ArrayList<Score> results){
         if(results!=null && results.size()>0){
             mTextPlaceHolder.setVisibility(View.GONE);
             mRecyclerView.setVisibility(View.VISIBLE);
 
-            //mResultsAdapter.setResults(results);
+            mScoreAdapter.updateData(results);
 
         }else {
             mTextPlaceHolder.setVisibility(View.VISIBLE);
