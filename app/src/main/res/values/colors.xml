@@ -5,9 +5,21 @@
     <color name="colorAccent">#FF4368</color>
 
 
-    <color name="colorLightGrey">#dedede</color>
-    <color name="colorMidGrey">#A0A0A0</color>
-    <color name="colorGrey">#414141</color>
+    <color name="gray_light">#dedede</color>
+    <color name="gray_mid">#A0A0A0</color>
+    <color name="gray">#414141</color>
+
+    <color name="gold">#E8CD90</color>
+    <color name="gold_dark">#B6923F</color>
+
+    <color name="gold_alpha">#66E8CD90</color>
+    <color name="gold_dark_alpha">#66B6923F</color>
+
+    <color name="fb_blue">#09567E</color>
+    <color name="fb_blue_light">#0578b4</color>
+
+    <color name="fb_blue_alpha">#6609567E</color>
+    <color name="fb_blue_light_alpha">#660578b4</color>
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>

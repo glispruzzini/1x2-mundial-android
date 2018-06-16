@@ -2,10 +2,10 @@ package it.crispybacon.mundial1x2.sections.authentication;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.ActionMode;
 import android.support.v7.widget.AppCompatEditText;
+import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,29 +14,29 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import it.crispybacon.mundial1x2.core.apimodels.User;
 import it.crispybacon.mundial1x2.Activity1x2;
 import it.crispybacon.mundial1x2.R;
+import it.crispybacon.mundial1x2.core.apimodels.User;
 import it.crispybacon.mundial1x2.core.authentication.Authentication;
 import it.crispybacon.mundial1x2.sections.home.HomeActivity;
+import it.crispybacon.mundial1x2.ui.text.TextFieldsUtils;
 
-public class AuthenticationActivity extends Activity1x2
+public class LoginActivity extends Activity1x2
         implements View.OnClickListener {
 
     public static Intent getStartIntent(final Context context) {
-        Intent startIntent = new Intent(context, AuthenticationActivity.class);
+        Intent startIntent = new Intent(context, LoginActivity.class);
         return startIntent;
     }
 
     private AppCompatEditText mEditEmail;
     private AppCompatEditText mEditPassword;
-    private AppCompatEditText mEditRepeatPassword;
 
     private Consumer<User> mSuccessConsumer = new Consumer<User>() {
         @Override
         public void accept(User user) throws Exception {
             hideLoadingDialog();
-            startActivity(HomeActivity.getStartIntent(AuthenticationActivity.this));
+            startActivity(HomeActivity.getStartIntent(LoginActivity.this));
             finish();
         }
     };
@@ -54,14 +54,12 @@ public class AuthenticationActivity extends Activity1x2
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_authentication);
+        setContentView(R.layout.activity_login);
 
         mEditEmail = findViewById(R.id.edit_email);
         mEditPassword = findViewById(R.id.edit_password);
-        mEditRepeatPassword = findViewById(R.id.edit_repeat_password);
 
-        disableCopyPaste(mEditPassword);
-        disableCopyPaste(mEditPassword);
+        TextFieldsUtils.disableCopyPaste(mEditPassword);
 
         findViewById(R.id.button_login)
                 .setOnClickListener(this);
@@ -84,7 +82,7 @@ public class AuthenticationActivity extends Activity1x2
                 login();
                 break;
             case R.id.button_register:
-                register();
+                startActivity(RegisterActivity.getStartIntent(this));
                 break;
         }
     }
@@ -94,20 +92,6 @@ public class AuthenticationActivity extends Activity1x2
             showLoadingDialog();
             mAuthDisposable = Authentication.get()
                     .login(
-                            mEditEmail.getText().toString(),
-                            mEditPassword.getText().toString()
-                    )
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(mSuccessConsumer, mErrorConsumer);
-        }
-    }
-
-    private void register() {
-        if (validateFields()) {
-            showLoadingDialog();
-            mAuthDisposable = Authentication.get()
-                    .register(
                             mEditEmail.getText().toString(),
                             mEditPassword.getText().toString()
                     )
@@ -131,39 +115,7 @@ public class AuthenticationActivity extends Activity1x2
         } else {
             mEditPassword.setError(null);
         }
-        if (mEditRepeatPassword.getText().toString().isEmpty()) {
-            mEditRepeatPassword.setError(getString(R.string.auth_password_repeat_empty_error));
-            isValid = false;
-        } else if (!mEditRepeatPassword.getText().toString().equals(mEditPassword.getText().toString())) {
-            mEditRepeatPassword.setError(getString(R.string.auth_password_repeat_mismatch_error));
-            isValid = false;
-        } else {
-            mEditRepeatPassword.setError(null);
-        }
 
         return isValid;
-    }
-
-    private void disableCopyPaste(final AppCompatEditText editText) {
-        editText.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
-
-            public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
-                return false;
-            }
-
-            public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
-                return false;
-            }
-
-            public boolean onActionItemClicked(ActionMode actionMode, MenuItem item) {
-                return false;
-            }
-
-            public void onDestroyActionMode(ActionMode actionMode) {
-            }
-        });
-
-        editText.setLongClickable(false);
-        editText.setTextIsSelectable(false);
     }
 }
