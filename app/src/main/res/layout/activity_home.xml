@@ -6,13 +6,15 @@
     android:id="@+id/view_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_pattern"
+    android:backgroundTint="@color/black_ovelay"
+    android:backgroundTintMode="src_over"
     android:theme="@style/Base.Theme.AppCompat.Light">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/navigation_view"
-            android:background="@color/colorAccent"
             android:layout_alignParentTop="true">
 
             <RelativeLayout
@@ -29,6 +31,8 @@
                     android:layout_centerInParent="true"
                     android:layout_marginTop="@dimen/big_margin"
                     android:layout_marginBottom="@dimen/big_margin"
+                    app:srcCompat="@drawable/placeholder"
+                    app:borderSize="4dp"
                     app:borderColor="@color/white"/>
 
             </RelativeLayout>
@@ -113,10 +117,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:itemBackground="@color/colorAccent"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
         app:menu="@menu/menu"/>
+
 
 </RelativeLayout>
 

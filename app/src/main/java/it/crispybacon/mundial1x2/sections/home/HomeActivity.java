@@ -3,6 +3,8 @@ package it.crispybacon.mundial1x2.sections.home;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +13,7 @@ import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.util.Log;
+import android.view.MenuItem;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -27,13 +30,15 @@ import it.crispybacon.mundial1x2.core.apimodels.Match;
 import it.crispybacon.mundial1x2.core.apimodels.SimpleResponse;
 import it.crispybacon.mundial1x2.core.bets.BetsApiService;
 import it.crispybacon.mundial1x2.core.macthes.MatchesApiService;
+import it.crispybacon.mundial1x2.sections.results.ResultsActivity;
 import it.crispybacon.mundial1x2.ui.imageview.FlagImageView;
+import it.crispybacon.mundial1x2.ui.imageview.RoundedImageView;
 import it.crispybacon.mundial1x2.ui.section.BentBackgroundLayout;
 import it.crispybacon.mundial1x2.ui.selector.BetSelectionView;
 import it.crispybacon.mundial1x2.ui.text.DateTextView;
 
 public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSelection,
-    MatchesAdapter.OnItemClickListener{
+    MatchesAdapter.OnItemClickListener {
 
     public static Intent getStartIntent(final Context context) {
         Intent startIntent = new Intent(context, HomeActivity.class);
@@ -42,9 +47,10 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
 
 
     private BentBackgroundLayout mBentBackgroundLayout;
-
+    private RoundedImageView mImgProfile;
     private RecyclerView mRecyclerView;
     private MatchesAdapter mMatchesAdapter;
+
 
     private static final String TAG = "HomeActivity";
     private BetSelectionView mBetSelectionView;
@@ -61,6 +67,7 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
         setContentView(R.layout.activity_home);
 
         mBentBackgroundLayout = findViewById(R.id.bottom_container);
+        mImgProfile = findViewById(R.id.img_profile);
         mBetSelectionView = findViewById(R.id.bet_selection_view);
         mRecyclerView = findViewById(R.id.rv_matches);
 
@@ -69,8 +76,11 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
         mBetSelectionView.setBetListener(this);
     }
 
+    @Override
+    protected void init() {
+        super.init();
 
-    private void init(){
+        mImgProfile.setImageDrawable(getDrawable(R.drawable.placeholder));
 
         mMatchesAdapter = new MatchesAdapter(this);
         mMatchesAdapter.setOnItemClickListener(this);
@@ -82,6 +92,7 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
 
         getMatches();
     }
+
 
     @Override
     protected void onDestroy() {
@@ -155,4 +166,5 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
     public void onMatchClicked(Match aMatch) {
         Log.d(TAG, "onMatchClicked: "+aMatch);
     }
+
 }
