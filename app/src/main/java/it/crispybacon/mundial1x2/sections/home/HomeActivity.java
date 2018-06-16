@@ -37,29 +37,27 @@ import it.crispybacon.mundial1x2.ui.selector.BetSelectionView;
 import it.crispybacon.mundial1x2.ui.text.DateTextView;
 
 public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSelection,
-    BottomNavigationView.OnNavigationItemSelectedListener,
-    MatchesAdapter.OnItemClickListener {
+        BottomNavigationView.OnNavigationItemSelectedListener,
+        MatchesAdapter.OnItemClickListener {
+
+    private static final String TAG = "HomeActivity";
 
     public static Intent getStartIntent(final Context context) {
         Intent startIntent = new Intent(context, HomeActivity.class);
         return startIntent;
     }
 
-
     private BentBackgroundLayout mBentBackgroundLayout;
 
     private RecyclerView mRecyclerView;
     private MatchesAdapter mMatchesAdapter;
+    private LinearLayoutManager mLinearLayoutManager;
     private BottomNavigationView mMenu;
 
-    private static final String TAG = "HomeActivity";
     private BetSelectionView mBetSelectionView;
 
     private Disposable mDisposableMatches;
     private Disposable mDisposableBet;
-
-    private Match mShownMatch;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,16 +75,14 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
         mMenu.setOnNavigationItemSelectedListener(this);
     }
 
-
-    private void init(){
-
+    private void init() {
         mMatchesAdapter = new MatchesAdapter(this);
         mMatchesAdapter.setOnItemClickListener(this);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        mLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.setAdapter(mMatchesAdapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         new PagerSnapHelper().attachToRecyclerView(mRecyclerView);
-
 
         getMatches();
     }
@@ -110,13 +106,13 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<List<Match>>() {
                     @Override
-                    public void accept(List<Match> matches) throws Exception {
+                    public void accept(List<Match> matches) {
                         onMatchesLoaded(matches);
                         hideLoadingDialog();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
-                    public void accept(Throwable throwable) throws Exception {
+                    public void accept(Throwable throwable) {
                         showSnackBar(findViewById(R.id.view_root), throwable.getMessage());
                         hideLoadingDialog();
                     }
@@ -140,13 +136,13 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Consumer<SimpleResponse>() {
                         @Override
-                        public void accept(SimpleResponse response) throws Exception {
+                        public void accept(SimpleResponse response) {
                             showSnackBar(findViewById(R.id.view_root), getString(R.string.bet_placed, betResult.toString()));
                             hideLoadingDialog();
                         }
                     }, new Consumer<Throwable>() {
                         @Override
-                        public void accept(Throwable throwable) throws Exception {
+                        public void accept(Throwable throwable) {
                             showSnackBar(findViewById(R.id.view_root), throwable.getMessage());
                             hideLoadingDialog();
                         }
@@ -155,19 +151,19 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
     }
 
     @Override
-    public void onBetChoosen(Bet.BetResult aBetResult) {
-        placeBet(mShownMatch, aBetResult);
+    public void onBetChosen(Bet.BetResult aBetResult) {
+        Match vShownMatch = mMatchesAdapter.getMatch(mLinearLayoutManager.findFirstCompletelyVisibleItemPosition());
+        placeBet(vShownMatch, aBetResult);
     }
 
     @Override
     public void onMatchClicked(Match aMatch) {
-        Log.d(TAG, "onMatchClicked: "+aMatch);
+        Log.d(TAG, "onMatchClicked: " + aMatch);
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.navigation_home:
                 startActivity(HomeActivity.getStartIntent(this));
                 break;

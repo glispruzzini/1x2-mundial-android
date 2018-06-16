@@ -20,13 +20,15 @@ import it.crispybacon.mundial1x2.ui.text.DateTextView;
  * Created by Enrico Cappozzo on 15/06/2018.
  */
 
-public class MatchesAdapter  extends RecyclerView.Adapter<MatchesAdapter.MatchViewHolder> {
+public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchViewHolder> {
 
     private List<Match> mMatches;
 
     private OnItemClickListener mOnItemClickListener;
     private Context mContext;
-    SimpleDateFormat vSimpleDateFormat = new SimpleDateFormat("HH:mm", Locale.ITALY);
+    private SimpleDateFormat vTimeDateFormat = new SimpleDateFormat("HH:mm", Locale.ITALY);
+    private SimpleDateFormat vDayDateFormat = new SimpleDateFormat("EEE", Locale.ITALY);
+    private SimpleDateFormat vDateDateFormat = new SimpleDateFormat("dd/MM", Locale.ITALY);
 
     public MatchesAdapter(Context aContext) {
         mContext = aContext;
@@ -37,12 +39,11 @@ public class MatchesAdapter  extends RecyclerView.Adapter<MatchesAdapter.MatchVi
     }
 
 
-
     class MatchViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private FlagImageView mFlagImageLeft;
         private FlagImageView mFlagImageRight;
-        private DateTextView mDateTextView;
+        private AppCompatTextView mDateTextView;
         private AppCompatTextView mHourTextView;
 
         public MatchViewHolder(View itemView) {
@@ -56,16 +57,21 @@ public class MatchesAdapter  extends RecyclerView.Adapter<MatchesAdapter.MatchVi
         }
 
         public void bind(Match aMatch) {
+            mFlagImageLeft.withFlag(R.drawable.flag_russia)
+                    .andText(aMatch.team1.name);
 
+            mFlagImageRight.withFlag(R.drawable.flag_russia)
+                    .andText(aMatch.team2.name);
 
-                mFlagImageLeft.withFlag(R.drawable.flag_russia)
-                        .andText(aMatch.team1.name);
-
-                mFlagImageRight.withFlag(R.drawable.flag_russia)
-                        .andText(aMatch.team2.name);
-
-                mDateTextView.setDate(aMatch.date);
-                mHourTextView.setText(vSimpleDateFormat.format(aMatch.date));
+            mDateTextView.setText(
+                    new StringBuilder()
+                            .append(vDayDateFormat.format(aMatch.date))
+                            .append("\n")
+                            .append(vDateDateFormat.format(aMatch.date))
+                            .toString()
+                            .toUpperCase()
+            );
+            mHourTextView.setText(vTimeDateFormat.format(aMatch.date));
         }
 
         @Override
@@ -75,14 +81,13 @@ public class MatchesAdapter  extends RecyclerView.Adapter<MatchesAdapter.MatchVi
         }
     }
 
-
     @Override
     public MatchViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new MatchViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.column_match, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(MatchViewHolder holder,final int position) {
+    public void onBindViewHolder(MatchViewHolder holder, final int position) {
         holder.bind(mMatches.get(position));
     }
 
@@ -91,8 +96,14 @@ public class MatchesAdapter  extends RecyclerView.Adapter<MatchesAdapter.MatchVi
         return null != mMatches ? mMatches.size() : 0;
     }
 
-    public void updateData(List<Match> aMatches) {
+    public Match getMatch(final int position) {
+        if (position >= 0 && position < mMatches.size()) {
+            return mMatches.get(position);
+        }
+        return null;
+    }
 
+    public void updateData(List<Match> aMatches) {
         if (aMatches != null) {
             mMatches = aMatches;
             notifyDataSetChanged();
@@ -102,6 +113,4 @@ public class MatchesAdapter  extends RecyclerView.Adapter<MatchesAdapter.MatchVi
     public void setOnItemClickListener(OnItemClickListener aOnItemClickListener) {
         mOnItemClickListener = aOnItemClickListener;
     }
-
-
 }
