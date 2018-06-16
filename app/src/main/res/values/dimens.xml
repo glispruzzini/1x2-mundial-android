@@ -24,7 +24,7 @@
     <dimen name="icon_profile">120dp</dimen>
     <dimen name="icon_flag_width">100dp</dimen>
     <dimen name="icon_flag_height">60dp</dimen>
-    <dimen name="icon">50dp</dimen>
+    <dimen name="icon">34dp</dimen>
 
 
 </resources>

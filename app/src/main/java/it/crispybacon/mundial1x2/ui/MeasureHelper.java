@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 
 /**
- * Created by Enrico Cappozzo on 15/06/2018.
+ * Created by itscap on 15/06/2018.
  */
 
 public class MeasureHelper {
