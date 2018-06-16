@@ -43,7 +43,7 @@ public class Authentication {
                 .flatMap(new Function<AuthResult, ObservableSource<User>>() {
                     @Override
                     public ObservableSource<User> apply(AuthResult authResult) throws Exception {
-                        return getUser();
+                        return createUser();
                     }
                 });
     }
@@ -77,7 +77,7 @@ public class Authentication {
                 .flatMap(new Function<AuthResult, ObservableSource<User>>() {
                     @Override
                     public ObservableSource<User> apply(AuthResult authResult) throws Exception {
-                        return getUser();
+                        return createUser();
                     }
                 });
     }
@@ -134,15 +134,19 @@ public class Authentication {
         });
     }
 
-    public Observable<User> getUser() {
+    public Observable<User> createUser() {
         return getToken()
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .flatMap(new Function<String, ObservableSource<User>>() {
                     @Override
                     public ObservableSource<User> apply(String token) throws Exception {
-                        return UserApiService.get().getUser(token);
+                        return UserApiService.get().createUser(token);
                     }
                 });
+    }
+
+    public Observable<User> getUser() {
+        return UserApiService.get().getUser();
     }
 }

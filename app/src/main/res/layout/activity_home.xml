@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/view_root"
@@ -11,104 +10,103 @@
     android:backgroundTintMode="src_over"
     android:theme="@style/Base.Theme.AppCompat.Light">
 
-        <RelativeLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/navigation_view"
+        android:layout_alignParentTop="true">
+
+        <it.crispybacon.mundial1x2.ui.imageview.RoundedImageView
+            android:id="@+id/img_profile"
+            android:layout_width="@dimen/icon_profile"
+            android:layout_height="@dimen/icon_profile"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/big_margin"
+            app:borderColor="@color/white" />
+
+        <it.crispybacon.mundial1x2.ui.StarsView
+            android:id="@+id/view_stars"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/big_margin"
+            android:layout_marginTop="@dimen/smaller_margin"
+            android:layout_below="@+id/img_profile"
+            android:layout_marginBottom="@dimen/big_margin" />
+
+        <it.crispybacon.mundial1x2.ui.section.BentBackgroundLayout
+            android:id="@+id/bottom_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/navigation_view"
-            android:layout_alignParentTop="true">
+            android:layout_below="@+id/view_stars">
 
-            <RelativeLayout
+            <LinearLayout
+                android:id="@+id/basic_profile_info_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/top_container"
-                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_horizontal"
                 android:orientation="vertical">
-                
-                <it.crispybacon.mundial1x2.ui.imageview.RoundedImageView
-                    android:layout_width="@dimen/icon_profile"
-                    android:layout_height="@dimen/icon_profile"
-                    android:id="@+id/img_profile"
-                    android:layout_centerInParent="true"
-                    android:layout_marginTop="@dimen/big_margin"
-                    android:layout_marginBottom="@dimen/big_margin"
-                    app:borderColor="@color/white"/>
 
-            </RelativeLayout>
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/text_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/mid_margin"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:text="Fabio"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/text_size_medium_big" />
 
-            <it.crispybacon.mundial1x2.ui.section.BentBackgroundLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/top_container"
-                android:id="@+id/bottom_container">
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:text="@string/home_today_matches"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorGrey"
+                    android:textSize="@dimen/text_size_very_small" />
 
-                <LinearLayout
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/smaller_margin"
+                    android:background="@color/colorLightGrey" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/match_info_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/basic_profile_info_container"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/mid_margin"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_matches"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/basic_profile_info_container"
-                    android:orientation="vertical"
-                    android:gravity="center_horizontal"
-                    android:layout_centerHorizontal="true">
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                    tools:listitem="@layout/column_match" />
 
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Fabio"
-                        android:id="@+id/text_user_name"
-                        android:textSize="@dimen/text_size_medium_big"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:fontFamily="@font/montserrat_semibold"
-                        android:layout_marginTop="@dimen/mid_margin"/>
+            </LinearLayout>
 
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/home_today_matches"
-                        android:layout_marginTop="@dimen/small_margin"
-                        android:textSize="@dimen/text_size_very_small"
-                        android:textColor="@color/colorGrey"
-                        android:fontFamily="@font/montserrat_regular"
-                        android:textAllCaps="true"/>
+            <it.crispybacon.mundial1x2.ui.selector.BetSelectionView
+                android:id="@+id/bet_selection_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/match_info_container"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="@dimen/big_margin"
+                android:gravity="center"
+                android:visibility="visible" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="@dimen/smaller_margin"
-                        android:background="@color/colorLightGrey"/>
+        </it.crispybacon.mundial1x2.ui.section.BentBackgroundLayout>
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/match_info_container"
-                    android:layout_centerHorizontal="true"
-                    android:layout_below="@+id/basic_profile_info_container"
-                    android:layout_marginTop="@dimen/mid_margin"
-                    android:orientation="vertical">
-
-                    <android.support.v7.widget.RecyclerView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/rv_matches"
-                        app:layoutManager="LinearLayoutManager"
-                        tools:listitem="@layout/column_match"/>
-
-                </LinearLayout>
-
-                <it.crispybacon.mundial1x2.ui.selector.BetSelectionView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/bet_selection_view"
-                    android:layout_below="@+id/match_info_container"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:visibility="visible"
-                    android:layout_margin="@dimen/big_margin"
-                    android:gravity="center"/>
-
-            </it.crispybacon.mundial1x2.ui.section.BentBackgroundLayout>
-
-        </RelativeLayout>
+    </RelativeLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation_view"
@@ -117,8 +115,7 @@
         android:layout_alignParentBottom="true"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
-        app:menu="@menu/menu"/>
-
+        app:menu="@menu/menu" />
 
 </RelativeLayout>
 
