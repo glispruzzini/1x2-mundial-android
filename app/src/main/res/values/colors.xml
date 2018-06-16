@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#C53829</color>
-    <color name="colorPrimaryDark">#C53829</color>
+    <color name="colorPrimary">#d30208</color>
+    <color name="colorPrimaryDark">#d30208</color>
     <color name="colorAccent">#FF4368</color>
 
 
@@ -11,5 +11,6 @@
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="black_ovelay">#30000000</color>
 
 </resources>
