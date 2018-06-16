@@ -92,21 +92,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/rv_matches"
+                        android:visibility="gone"
                         app:layoutManager="LinearLayoutManager"
                         tools:listitem="@layout/column_match"/>
 
                 </LinearLayout>
 
                 <it.crispybacon.mundial1x2.ui.selector.BetSelectionView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/bet_selection_view_height"
                     android:id="@+id/bet_selection_view"
-                    android:layout_below="@+id/match_info_container"
                     android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:visibility="visible"
-                    android:layout_margin="@dimen/big_margin"
-                    android:gravity="center"/>
+                    android:layout_centerHorizontal="true"/>
 
             </it.crispybacon.mundial1x2.ui.section.BentBackgroundLayout>
 
