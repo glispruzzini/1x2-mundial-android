@@ -1,4 +1,4 @@
-package it.crispybacon.mundial1x2.results;
+package it.crispybacon.mundial1x2.sections.results;
 
 import android.content.Context;
 import android.content.Intent;

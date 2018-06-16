@@ -1,7 +1,16 @@
 package it.crispybacon.mundial1x2.core;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
+
+import com.google.firebase.FirebaseApp;
+import com.squareup.moshi.Moshi;
+import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter;
+
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
+import it.crispybacon.mundial1x2.core.apimodels.Bet;
+import okhttp3.OkHttpClient;
 
 /**
  * Created by Jameido on 14/06/2018.
@@ -9,7 +18,7 @@ import android.content.Context;
 
 public class Core {
 
-    private static final String BASE_URL = "https://gli.spruzzini.it";
+    private static final String BASE_URL = "https://1x2.iamdavi.de/";
 
     private static final String TAG = "Core";
 
@@ -24,6 +33,16 @@ public class Core {
 
     private Core() {
     }
+
+    private FirebaseApp mFirebaseApp;
+
+    private OkHttpClient mAuthHttpClient = new OkHttpClient();
+    private OkHttpClient mNoAuthHttpClient = new OkHttpClient();
+
+    private Moshi mMoshi = new Moshi
+            .Builder()
+            .add(Date.class, new Rfc3339DateJsonAdapter())
+            .build();
 
     private AuthCredentialsReader mAuthCredentialsReader = new AuthCredentialsReader() {
         @Override
@@ -46,6 +65,7 @@ public class Core {
             return null;
         }
     };
+
     private AuthTokenWriter mAuthTokenWriter = new AuthTokenWriter() {
         @Override
         public void writeAuthToken(String token) {
@@ -53,20 +73,10 @@ public class Core {
         }
     };
 
-    public String getBaseUrl() {
-        return BASE_URL;
-    }
-
-    public AuthCredentialsReader getAuthCredentialsReader() {
-        return mAuthCredentialsReader;
-    }
-
-    public AuthTokenWriter getAuthTokenWriter() {
-        return mAuthTokenWriter;
-    }
-
-    public void setup(final Context context) {
+    public void setup(final Context context, final FirebaseApp firebaseApp) {
         final Context vContext = context.getApplicationContext();
+
+        mFirebaseApp = firebaseApp;
 
         mAuthCredentialsReader = new AuthCredentialsReader() {
             @Override
@@ -96,6 +106,51 @@ public class Core {
 
             }
         };
+
+        initOkHttpClient(context);
+    }
+
+    private void initOkHttpClient(final Context context) {
+
+        OkHttpClient.Builder vBuilder = new OkHttpClient.Builder()
+                .connectTimeout(60_000, TimeUnit.MILLISECONDS)
+                .readTimeout(60_000, TimeUnit.MILLISECONDS)
+                .writeTimeout(60_000, TimeUnit.MILLISECONDS);
+
+        mNoAuthHttpClient = vBuilder
+                .build();
+
+        mAuthHttpClient = vBuilder
+                .addInterceptor(new TokenInterceptor())
+                .build();
+    }
+
+    public String getBaseUrl() {
+        return BASE_URL;
+    }
+
+    public FirebaseApp getFirebaseApp() {
+        return mFirebaseApp;
+    }
+
+    public OkHttpClient getAuthHttpClient() {
+        return mAuthHttpClient;
+    }
+
+    public OkHttpClient getNoAuthHttpClient() {
+        return mNoAuthHttpClient;
+    }
+
+    public Moshi getMoshi() {
+        return mMoshi;
+    }
+
+    public AuthCredentialsReader getAuthCredentialsReader() {
+        return mAuthCredentialsReader;
+    }
+
+    public AuthTokenWriter getAuthTokenWriter() {
+        return mAuthTokenWriter;
     }
 
     public interface AuthCredentialsReader {

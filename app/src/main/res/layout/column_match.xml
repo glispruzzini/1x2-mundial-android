@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/match_info_container"
+    android:layout_centerHorizontal="true"
+    android:layout_below="@+id/basic_profile_info_container"
+    android:layout_marginTop="@dimen/mid_margin"
+    android:orientation="horizontal"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center_horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <it.crispybacon.mundial1x2.ui.imageview.FlagImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/img_left_team"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/small_margin"
+        android:layout_marginEnd="@dimen/small_margin"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <it.crispybacon.mundial1x2.ui.text.DateTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/text_date"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/text_hour"
+            android:layout_marginTop="@dimen/small_margin"
+            android:textSize="@dimen/text_size_medium"
+            android:textColor="@color/black"
+            android:fontFamily="@font/montserrat_semibold"
+            tools:text="20:00"/>
+
+    </LinearLayout>
+
+    <it.crispybacon.mundial1x2.ui.imageview.FlagImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/img_right_team"/>
+
+</LinearLayout>

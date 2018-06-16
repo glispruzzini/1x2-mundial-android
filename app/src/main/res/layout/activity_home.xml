@@ -6,20 +6,19 @@
     android:id="@+id/view_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:theme="@style/Base.Theme.AppCompat.Light">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/navigation_view"
+            android:background="@color/colorAccent"
             android:layout_alignParentTop="true">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/top_container"
-                android:background="@color/colorAccent"
                 android:layout_alignParentTop="true"
                 android:orientation="vertical">
                 
@@ -34,12 +33,11 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
+            <it.crispybacon.mundial1x2.ui.section.BentBackgroundLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/top_container"
-                android:id="@+id/bottom_container"
-                android:background="@color/white">
+                android:id="@+id/bottom_container">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -84,44 +82,14 @@
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/basic_profile_info_container"
                     android:layout_marginTop="@dimen/mid_margin"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
-                    <it.crispybacon.mundial1x2.ui.imageview.FlagImageView
-                        android:layout_width="wrap_content"
+                    <android.support.v7.widget.RecyclerView
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/img_left_team"/>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/small_margin"
-                        android:layout_marginEnd="@dimen/small_margin"
-                        android:layout_gravity="center"
-                        android:orientation="vertical">
-
-                        <it.crispybacon.mundial1x2.ui.text.DateTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:id="@+id/text_date"/>
-
-                        <android.support.v7.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:id="@+id/text_hour"
-                            android:layout_marginTop="@dimen/small_margin"
-                            android:textSize="@dimen/text_size_medium"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/montserrat_semibold"
-                            tools:text="20:00"/>
-
-                    </LinearLayout>
-
-                    <it.crispybacon.mundial1x2.ui.imageview.FlagImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/img_right_team"/>
+                        android:id="@+id/rv_matches"
+                        app:layoutManager="LinearLayoutManager"
+                        tools:listitem="@layout/column_match"/>
 
                 </LinearLayout>
 
@@ -136,7 +104,7 @@
                     android:layout_margin="@dimen/big_margin"
                     android:gravity="center"/>
 
-            </RelativeLayout>
+            </it.crispybacon.mundial1x2.ui.section.BentBackgroundLayout>
 
         </RelativeLayout>
 

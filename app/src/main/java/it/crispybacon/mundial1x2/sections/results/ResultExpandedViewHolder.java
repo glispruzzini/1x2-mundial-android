@@ -1,8 +1,6 @@
-package it.crispybacon.mundial1x2.results;
+package it.crispybacon.mundial1x2.sections.results;
 
-import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import it.crispybacon.mundial1x2.R;

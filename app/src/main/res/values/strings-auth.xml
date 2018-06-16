@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="auth_email_hint">Email</string>
+    <string name="auth_email_empty_error">Email cannot be empty</string>
+    <string name="auth_password_hint">Password</string>
+    <string name="auth_password_empty_error">Password cannot be empty</string>
+    <string name="auth_password_repeat_hint">Repeat password</string>
+    <string name="auth_password_repeat_empty_error">Repeat password cannot be empty</string>
+    <string name="auth_password_repeat_mismatch_error">Passwords must match</string>
+    <string name="auth_login">Sign in</string>
+    <string name="auth_register">Sign up</string>
+    <string name="auth_success">Authentication successful</string>
+    <string name="auth_error">Authentication error</string>
+</resources>
