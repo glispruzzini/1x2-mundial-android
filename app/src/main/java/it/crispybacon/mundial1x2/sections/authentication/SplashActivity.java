@@ -17,7 +17,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void checkAuthentication() {
-        if (Authentication.get().getUser() != null) {
+        if (Authentication.get().getFirebaseUser() != null) {
             startActivity(HomeActivity.getStartIntent(this));
         } else {
             startActivity(AuthenticationActivity.getStartIntent(this));
