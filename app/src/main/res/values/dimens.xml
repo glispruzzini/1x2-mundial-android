@@ -19,6 +19,7 @@
     <dimen name="mid_small_margin">20dp</dimen>
     <dimen name="small_margin">15dp</dimen>
     <dimen name="smaller_margin">12dp</dimen>
+    <dimen name="smallest_margin">8dp</dimen>
 
     <dimen name="icon_profile">120dp</dimen>
     <dimen name="icon_flag_width">100dp</dimen>

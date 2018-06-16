@@ -1,4 +1,4 @@
-package it.crispybacon.mundial1x2;
+package it.crispybacon.mundial1x2.sections.authentication;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,16 +10,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.AuthResult;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import it.crispybacon.mundial1x2.core.apimodels.User;
+import it.crispybacon.mundial1x2.Activity1x2;
+import it.crispybacon.mundial1x2.R;
 import it.crispybacon.mundial1x2.core.authentication.Authentication;
+import it.crispybacon.mundial1x2.sections.home.HomeActivity;
 
 public class AuthenticationActivity extends Activity1x2
         implements View.OnClickListener {

@@ -58,8 +58,8 @@ public class FlagImageView extends LinearLayout {
         mTextView = new AppCompatTextView(getContext());
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.gravity = Gravity.CENTER_HORIZONTAL;
-            params.topMargin = (int) MeasureHelper.getPointsValueOfRes(getContext(),R.dimen.smaller_margin);
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+        //params.topMargin = (int) MeasureHelper.getPointsValueOfRes(getContext(),R.dimen.smallest_margin);
         mTextView.setLayoutParams(params);
         mTextView.setTypeface(ResourcesCompat.getFont(getContext(), R.font.montserrat_regular));
         addView(mTextView);

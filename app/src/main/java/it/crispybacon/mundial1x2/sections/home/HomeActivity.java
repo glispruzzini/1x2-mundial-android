@@ -1,9 +1,19 @@
-package it.crispybacon.mundial1x2;
+package it.crispybacon.mundial1x2.sections.home;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
+import android.support.v7.widget.PagerSnapHelper;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
+import android.util.Log;
+import android.view.MenuItem;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -13,26 +23,36 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import it.crispybacon.mundial1x2.Activity1x2;
+import it.crispybacon.mundial1x2.R;
 import it.crispybacon.mundial1x2.core.apimodels.Bet;
 import it.crispybacon.mundial1x2.core.apimodels.Match;
 import it.crispybacon.mundial1x2.core.apimodels.SimpleResponse;
 import it.crispybacon.mundial1x2.core.bets.BetsApiService;
 import it.crispybacon.mundial1x2.core.macthes.MatchesApiService;
+import it.crispybacon.mundial1x2.sections.results.ResultsActivity;
 import it.crispybacon.mundial1x2.ui.imageview.FlagImageView;
+import it.crispybacon.mundial1x2.ui.section.BentBackgroundLayout;
 import it.crispybacon.mundial1x2.ui.selector.BetSelectionView;
 import it.crispybacon.mundial1x2.ui.text.DateTextView;
 
-public class HomeActivity extends Activity1x2 {
+public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSelection,
+    BottomNavigationView.OnNavigationItemSelectedListener,
+    MatchesAdapter.OnItemClickListener {
 
     public static Intent getStartIntent(final Context context) {
         Intent startIntent = new Intent(context, HomeActivity.class);
         return startIntent;
     }
 
-    private FlagImageView mFlagImageLeft;
-    private FlagImageView mFlagImageRight;
-    private DateTextView mDateTextView;
-    private AppCompatTextView mHourTextView;
+
+    private BentBackgroundLayout mBentBackgroundLayout;
+
+    private RecyclerView mRecyclerView;
+    private MatchesAdapter mMatchesAdapter;
+    private BottomNavigationView mMenu;
+
+    private static final String TAG = "HomeActivity";
     private BetSelectionView mBetSelectionView;
 
     private Disposable mDisposableMatches;
@@ -40,35 +60,33 @@ public class HomeActivity extends Activity1x2 {
 
     private Match mShownMatch;
 
-    private BetSelectionView.OnBetSelectedListener mOnBetSelectedListener = new BetSelectionView.OnBetSelectedListener() {
-        @Override
-        public void onBetSelected1() {
-            placeBet(mShownMatch, Bet.BetResult.HOME);
-        }
-
-        @Override
-        public void onBetSelectedX() {
-            placeBet(mShownMatch, Bet.BetResult.TIE);
-        }
-
-        @Override
-        public void onBetSelected2() {
-            placeBet(mShownMatch, Bet.BetResult.AWAY);
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        mFlagImageLeft = findViewById(R.id.img_left_team);
-        mFlagImageRight = findViewById(R.id.img_right_team);
-        mDateTextView = findViewById(R.id.text_date);
-        mHourTextView = findViewById(R.id.text_hour);
-
+        mBentBackgroundLayout = findViewById(R.id.bottom_container);
         mBetSelectionView = findViewById(R.id.bet_selection_view);
-        mBetSelectionView.setOnBetSelectedListener(mOnBetSelectedListener);
+        mRecyclerView = findViewById(R.id.rv_matches);
+        mMenu = findViewById(R.id.navigation_view);
+
+        init();
+
+        mBetSelectionView.setBetListener(this);
+        mMenu.setOnNavigationItemSelectedListener(this);
+    }
+
+
+    private void init(){
+
+        mMatchesAdapter = new MatchesAdapter(this);
+        mMatchesAdapter.setOnItemClickListener(this);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        mRecyclerView.setAdapter(mMatchesAdapter);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        new PagerSnapHelper().attachToRecyclerView(mRecyclerView);
+
 
         getMatches();
     }
@@ -107,16 +125,7 @@ public class HomeActivity extends Activity1x2 {
 
     private void onMatchesLoaded(List<Match> matches) {
         if (matches != null && matches.size() > 0) {
-            mShownMatch = matches.get(0);
-            mFlagImageLeft.withFlag(R.drawable.flag_russia)
-                    .andText(mShownMatch.team1.name);
-
-            mFlagImageRight.withFlag(R.drawable.flag_russia)
-                    .andText(mShownMatch.team2.name);
-
-            mDateTextView.setDate(mShownMatch.date);
-            SimpleDateFormat vSimpleDateFormat = new SimpleDateFormat("HH:mm", Locale.ITALY);
-            mHourTextView.setText(vSimpleDateFormat.format(mShownMatch.date));
+            mMatchesAdapter.updateData(matches);
         } else {
             //TODO: show placeholder
         }
@@ -143,5 +152,33 @@ public class HomeActivity extends Activity1x2 {
                         }
                     });
         }
+    }
+
+    @Override
+    public void onBetChoosen(Bet.BetResult aBetResult) {
+        placeBet(mShownMatch, aBetResult);
+    }
+
+    @Override
+    public void onMatchClicked(Match aMatch) {
+        Log.d(TAG, "onMatchClicked: "+aMatch);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.navigation_home:
+                startActivity(HomeActivity.getStartIntent(this));
+                break;
+            case R.id.navigation_results:
+                startActivity(ResultsActivity.getStartIntent(this));
+                break;
+            case R.id.navigation_score:
+                startActivity(HomeActivity.getStartIntent(this));
+                break;
+
+        }
+        return true;
     }
 }
