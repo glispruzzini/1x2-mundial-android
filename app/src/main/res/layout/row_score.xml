@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:padding="@dimen/small_margin"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_pos"
+        android:text="0"
+        android:textSize="@dimen/text_size_medium_big"
+        android:textColor="@color/colorLightGrey"
+        android:fontFamily="@font/montserrat_bold"
+        android:gravity="center"/>
+
+    <it.crispybacon.mundial1x2.ui.imageview.RoundedImageView
+        android:layout_width="@dimen/icon"
+        android:layout_height="@dimen/icon"
+        android:id="@+id/img_profile"
+        android:layout_marginStart="@dimen/small_margin"
+        app:borderColor="@color/white"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_name"
+        android:layout_marginStart="@dimen/small_margin"
+        android:textSize="@dimen/text_size_medium_big"
+        android:textColor="@color/black"
+        android:fontFamily="@font/montserrat_regular"
+        android:gravity="start"
+        android:layout_weight="1"
+        tools:text="Luca R."/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_score"
+        android:layout_marginStart="@dimen/small_margin"
+        android:textSize="@dimen/text_size_medium_big"
+        android:textColor="@color/black"
+        android:fontFamily="@font/montserrat_regular"
+        android:gravity="center|end"
+        tools:text="123"/>
+
+</LinearLayout>

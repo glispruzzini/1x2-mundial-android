@@ -25,6 +25,7 @@ import it.crispybacon.mundial1x2.core.authentication.Authentication;
 import it.crispybacon.mundial1x2.core.bets.BetsApiService;
 import it.crispybacon.mundial1x2.core.macthes.MatchesApiService;
 import it.crispybacon.mundial1x2.ui.StarsView;
+import it.crispybacon.mundial1x2.ui.imageview.RoundedImageView;
 import it.crispybacon.mundial1x2.ui.section.BentBackgroundLayout;
 import it.crispybacon.mundial1x2.ui.selector.BetSelectionView;
 
@@ -40,7 +41,7 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
     }
 
     private BentBackgroundLayout mBentBackgroundLayout;
-
+    private RoundedImageView mImgProfile;
     private RecyclerView mRecyclerView;
     private MatchesAdapter mMatchesAdapter;
     private LinearLayoutManager mLinearLayoutManager;
@@ -59,6 +60,7 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
         setContentView(R.layout.activity_home);
 
         mBentBackgroundLayout = findViewById(R.id.bottom_container);
+        mImgProfile = findViewById(R.id.img_profile);
         mBetSelectionView = findViewById(R.id.bet_selection_view);
         mRecyclerView = findViewById(R.id.rv_matches);
         mStarsLives = findViewById(R.id.view_stars);
@@ -73,6 +75,8 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
     protected void init() {
         super.init();
         getUser();
+
+        mImgProfile.setImageDrawable(getDrawable(R.drawable.placeholder));
 
         mMatchesAdapter = new MatchesAdapter(this);
         mMatchesAdapter.setOnItemClickListener(this);

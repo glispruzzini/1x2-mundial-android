@@ -17,7 +17,7 @@ import it.crispybacon.mundial1x2.ui.imageview.FlagImageView;
 import it.crispybacon.mundial1x2.ui.text.DateTextView;
 
 /**
- * Created by Enrico Cappozzo on 15/06/2018.
+ * Created by itscap on 15/06/2018.
  */
 
 public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchViewHolder> {

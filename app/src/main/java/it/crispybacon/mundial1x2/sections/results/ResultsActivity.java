@@ -39,6 +39,8 @@ public class ResultsActivity extends Activity1x2 {
     @Override
     protected void init() {
         super.init();
+        mTvPlaceholder.setVisibility(View.GONE);
+
         LinearLayoutManager vLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         mRecyclerResults.setLayoutManager(vLayoutManager);
         mRecyclerResults.setAdapter(mResultsAdapter);

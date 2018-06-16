@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_pattern"
-    android:backgroundTint="@color/black_ovelay"
+    android:backgroundTint="@color/black_overlay"
     android:backgroundTintMode="src_over"
     android:theme="@style/Base.Theme.AppCompat.Light">
 
@@ -23,15 +23,17 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/big_margin"
-            app:borderColor="@color/white" />
+            app:borderColor="@color/white"
+            app:borderSize="4dp"
+            app:srcCompat="@drawable/placeholder" />
 
         <it.crispybacon.mundial1x2.ui.StarsView
             android:id="@+id/view_stars"
             android:layout_width="match_parent"
             android:layout_height="@dimen/big_margin"
-            android:layout_marginTop="@dimen/smaller_margin"
             android:layout_below="@+id/img_profile"
-            android:layout_marginBottom="@dimen/big_margin" />
+            android:layout_marginBottom="@dimen/big_margin"
+            android:layout_marginTop="@dimen/smaller_margin" />
 
         <it.crispybacon.mundial1x2.ui.section.BentBackgroundLayout
             android:id="@+id/bottom_container"
