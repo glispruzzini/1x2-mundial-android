@@ -5,6 +5,7 @@ import com.google.android.gms.tasks.Tasks;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
+import io.reactivex.schedulers.Schedulers;
 import it.crispybacon.mundial1x2.core.authentication.Authentication;
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -21,11 +22,12 @@ public class TokenInterceptor implements Interceptor {
 
         //Build new request
         Request.Builder builder = request.newBuilder();
-        try {
-            setAuthHeader(builder, Tasks.await(Authentication.get().getToken()).getToken()); //write current token to request
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
+
+        setAuthHeader(builder, Authentication.get()
+                .getToken()
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .blockingFirst()); //write current token to request
 
         request = builder.build(); //overwrite old request
         Response vResponse = chain.proceed(request);

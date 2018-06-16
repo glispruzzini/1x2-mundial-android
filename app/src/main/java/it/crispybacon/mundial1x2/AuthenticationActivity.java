@@ -14,10 +14,15 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import it.crispybacon.mundial1x2.core.apimodels.User;
 import it.crispybacon.mundial1x2.core.authentication.Authentication;
 
 public class AuthenticationActivity extends Activity1x2
-        implements View.OnClickListener, OnSuccessListener<AuthResult>, OnFailureListener {
+        implements View.OnClickListener {
 
     public static Intent getStartIntent(final Context context) {
         Intent startIntent = new Intent(context, AuthenticationActivity.class);
@@ -27,6 +32,25 @@ public class AuthenticationActivity extends Activity1x2
     private AppCompatEditText mEditEmail;
     private AppCompatEditText mEditPassword;
     private AppCompatEditText mEditRepeatPassword;
+
+    private Consumer<User> mSuccessConsumer = new Consumer<User>() {
+        @Override
+        public void accept(User user) throws Exception {
+            hideLoadingDialog();
+            startActivity(HomeActivity.getStartIntent(AuthenticationActivity.this));
+            finish();
+        }
+    };
+
+    private Consumer<Throwable> mErrorConsumer = new Consumer<Throwable>() {
+        @Override
+        public void accept(Throwable throwable) throws Exception {
+            hideLoadingDialog();
+            showSnackBar(findViewById(R.id.view_root), throwable.getMessage());
+        }
+    };
+
+    private Disposable mAuthDisposable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +71,14 @@ public class AuthenticationActivity extends Activity1x2
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mAuthDisposable != null && !mAuthDisposable.isDisposed()) {
+            mAuthDisposable.dispose();
+        }
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button_login:
@@ -58,42 +90,31 @@ public class AuthenticationActivity extends Activity1x2
         }
     }
 
-    @Override
-    public void onSuccess(AuthResult authResult) {
-        hideLoadingDialog();
-        startActivity(HomeActivity.getStartIntent(this));
-        finish();
-    }
-
-    @Override
-    public void onFailure(@NonNull Exception e) {
-        hideLoadingDialog();
-        showSnackBar(findViewById(R.id.view_root), e.getMessage());
-    }
-
     private void login() {
         if (validateFields()) {
             showLoadingDialog();
-            Authentication.get()
+            mAuthDisposable = Authentication.get()
                     .login(
                             mEditEmail.getText().toString(),
                             mEditPassword.getText().toString()
                     )
-                    .addOnSuccessListener(this)
-                    .addOnFailureListener(this);
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(mSuccessConsumer, mErrorConsumer);
         }
     }
 
     private void register() {
         if (validateFields()) {
             showLoadingDialog();
-            Authentication.get()
+            mAuthDisposable = Authentication.get()
                     .register(
                             mEditEmail.getText().toString(),
                             mEditPassword.getText().toString()
                     )
-                    .addOnSuccessListener(this)
-                    .addOnFailureListener(this);
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(mSuccessConsumer, mErrorConsumer);
         }
     }
 
