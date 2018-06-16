@@ -1,5 +1,7 @@
 package it.crispybacon.mundial1x2.core.authentication;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
@@ -7,7 +9,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import it.crispybacon.mundial1x2.core.Core;
+import it.crispybacon.mundial1x2.core.apimodels.User;
 
 /**
  * Created by Jameido on 14/06/2018.
@@ -28,27 +39,113 @@ public class Authentication {
         return FirebaseAuth.getInstance(Core.get().getFirebaseApp());
     }
 
-    public Task<AuthResult> register(final String email, final String passowrd) {
-        return getFirebaseAuth()
-                .createUserWithEmailAndPassword(email, passowrd);
+    public Observable<User> register(final String email, final String passowrd) {
+        return registerFirebase(email, passowrd)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .flatMap(new Function<AuthResult, ObservableSource<User>>() {
+                    @Override
+                    public ObservableSource<User> apply(AuthResult authResult) throws Exception {
+                        return getUser();
+                    }
+                });
     }
 
-    public Task<AuthResult> login(final String email, final String passowrd) {
-        return getFirebaseAuth()
-                .signInWithEmailAndPassword(email, passowrd);
+    public Observable<AuthResult> registerFirebase(final String email, final String passowrd) {
+        return Observable.create(new ObservableOnSubscribe<AuthResult>() {
+            @Override
+            public void subscribe(final ObservableEmitter<AuthResult> emitter) throws Exception {
+                getFirebaseAuth()
+                        .createUserWithEmailAndPassword(email, passowrd)
+                        .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                            @Override
+                            public void onSuccess(AuthResult authResult) {
+                                emitter.onNext(authResult);
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                emitter.onError(e);
+                            }
+                        });
+            }
+        });
     }
 
-    public FirebaseUser getUser() {
-        return getFirebaseAuth()
-                .getCurrentUser();
+    public Observable<User> login(final String email, final String passowrd) {
+        return loginFirebase(email, passowrd)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .flatMap(new Function<AuthResult, ObservableSource<User>>() {
+                    @Override
+                    public ObservableSource<User> apply(AuthResult authResult) throws Exception {
+                        return getUser();
+                    }
+                });
     }
 
-    public Task<GetTokenResult> getToken() {
-        FirebaseUser vFirebaseUser = getUser();
+    public Observable<AuthResult> loginFirebase(final String email, final String passowrd) {
+
+        return Observable.create(new ObservableOnSubscribe<AuthResult>() {
+            @Override
+            public void subscribe(final ObservableEmitter<AuthResult> emitter) throws Exception {
+                getFirebaseAuth()
+                        .signInWithEmailAndPassword(email, passowrd)
+                        .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                            @Override
+                            public void onSuccess(AuthResult authResult) {
+                                emitter.onNext(authResult);
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                emitter.onError(e);
+                            }
+                        });
+            }
+        });
+    }
+
+    public FirebaseUser getFirebaseUser() {
+        return getFirebaseAuth().getCurrentUser();
+    }
+
+    public Observable<String> getToken() {
+        final FirebaseUser vFirebaseUser = getFirebaseUser();
         if (vFirebaseUser == null) {
-            return Tasks.forException(new Exception("Need a logged user to get a token, please login or register"));
-        } else {
-            return vFirebaseUser.getIdToken(true);
+            return Observable.error(new Exception("Need a logged user to get a token, please login or register"));
         }
+        return Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(final ObservableEmitter<String> emitter) throws Exception {
+                vFirebaseUser.getIdToken(true)
+                        .addOnSuccessListener(new OnSuccessListener<GetTokenResult>() {
+                            @Override
+                            public void onSuccess(GetTokenResult getTokenResult) {
+                                emitter.onNext(getTokenResult.getToken());
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                emitter.onError(e);
+                            }
+                        });
+            }
+        });
+    }
+
+    public Observable<User> getUser() {
+        return getToken()
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .flatMap(new Function<String, ObservableSource<User>>() {
+                    @Override
+                    public ObservableSource<User> apply(String token) throws Exception {
+                        return UserApiService.get().getUser(token);
+                    }
+                });
     }
 }
