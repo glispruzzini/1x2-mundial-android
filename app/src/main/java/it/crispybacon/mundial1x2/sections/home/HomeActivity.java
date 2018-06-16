@@ -32,6 +32,7 @@ import it.crispybacon.mundial1x2.core.bets.BetsApiService;
 import it.crispybacon.mundial1x2.core.macthes.MatchesApiService;
 import it.crispybacon.mundial1x2.sections.results.ResultsActivity;
 import it.crispybacon.mundial1x2.ui.imageview.FlagImageView;
+import it.crispybacon.mundial1x2.ui.imageview.RoundedImageView;
 import it.crispybacon.mundial1x2.ui.section.BentBackgroundLayout;
 import it.crispybacon.mundial1x2.ui.selector.BetSelectionView;
 import it.crispybacon.mundial1x2.ui.text.DateTextView;
@@ -46,7 +47,7 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
 
 
     private BentBackgroundLayout mBentBackgroundLayout;
-
+    private RoundedImageView mImgProfile;
     private RecyclerView mRecyclerView;
     private MatchesAdapter mMatchesAdapter;
 
@@ -66,6 +67,7 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
         setContentView(R.layout.activity_home);
 
         mBentBackgroundLayout = findViewById(R.id.bottom_container);
+        mImgProfile = findViewById(R.id.img_profile);
         mBetSelectionView = findViewById(R.id.bet_selection_view);
         mRecyclerView = findViewById(R.id.rv_matches);
 
@@ -77,6 +79,8 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
     @Override
     protected void init() {
         super.init();
+
+        mImgProfile.setImageDrawable(getDrawable(R.drawable.placeholder));
 
         mMatchesAdapter = new MatchesAdapter(this);
         mMatchesAdapter.setOnItemClickListener(this);
