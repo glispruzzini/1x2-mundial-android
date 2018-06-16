@@ -5,4 +5,5 @@
     <string name="results_guess_wrong">Not this time</string>
     <string name="results_points">Points</string>
     <string name="results_hidden_score">0:0</string>
+    <string name="results_no_res_yet">No results yet (ಥ﹏ಥ)</string>
 </resources>
