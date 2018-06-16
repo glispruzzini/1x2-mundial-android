@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="it.crispybacon.mundial1x2">
+          package="it.crispybacon.mundial1x2">
 
     <application
         android:name=".App1x2"
@@ -12,15 +12,16 @@
         android:theme="@style/AppTheme">
         <activity android:name=".sections.authentication.SplashActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".sections.results.ResultsActivity" />
-        <activity
-            android:name=".sections.authentication.AuthenticationActivity" />
-        <activity
-            android:name=".sections.home.HomeActivity"/>
+        <activity android:name=".sections.results.ResultsActivity"/>
+        <activity android:name=".sections.authentication.AuthenticationActivity"/>
+        <activity android:name=".sections.home.HomeActivity"/>
+        <activity android:name=".sections.score.ScoreActivity">
+        </activity>
     </application>
 
 </manifest>

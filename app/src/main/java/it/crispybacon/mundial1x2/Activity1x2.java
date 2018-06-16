@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import it.crispybacon.mundial1x2.sections.home.HomeActivity;
 import it.crispybacon.mundial1x2.sections.results.ResultsActivity;
+import it.crispybacon.mundial1x2.sections.score.ScoreActivity;
 import it.crispybacon.mundial1x2.ui.loading.LoadingDialog;
 
 /**
@@ -61,7 +62,7 @@ public abstract class Activity1x2 extends AppCompatActivity implements  BottomNa
                 startActivity(ResultsActivity.getStartIntent(this));
                 break;
             case R.id.navigation_score:
-                startActivity(HomeActivity.getStartIntent(this));
+                startActivity(ScoreActivity.getStartIntent(this));
                 break;
 
         }
