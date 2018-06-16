@@ -4,6 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
+import android.support.v7.widget.PagerSnapHelper;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
+import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -25,18 +32,19 @@ import it.crispybacon.mundial1x2.ui.section.BentBackgroundLayout;
 import it.crispybacon.mundial1x2.ui.selector.BetSelectionView;
 import it.crispybacon.mundial1x2.ui.text.DateTextView;
 
-public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSelection {
+public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSelection,
+    MatchesAdapter.OnItemClickListener{
 
     public static Intent getStartIntent(final Context context) {
         Intent startIntent = new Intent(context, HomeActivity.class);
         return startIntent;
     }
 
-    private FlagImageView mFlagImageLeft;
-    private FlagImageView mFlagImageRight;
-    private DateTextView mDateTextView;
-    private AppCompatTextView mHourTextView;
+
     private BentBackgroundLayout mBentBackgroundLayout;
+
+    private RecyclerView mRecyclerView;
+    private MatchesAdapter mMatchesAdapter;
 
     private static final String TAG = "HomeActivity";
     private BetSelectionView mBetSelectionView;
@@ -52,18 +60,28 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        mFlagImageLeft = findViewById(R.id.img_left_team);
-        mFlagImageRight = findViewById(R.id.img_right_team);
-        mDateTextView = findViewById(R.id.text_date);
-        mHourTextView = findViewById(R.id.text_hour);
-        mBetSelectionView = findViewById(R.id.bet_selection_view);
         mBentBackgroundLayout = findViewById(R.id.bottom_container);
         mBetSelectionView = findViewById(R.id.bet_selection_view);
+        mRecyclerView = findViewById(R.id.rv_matches);
 
-        getMatches();
+        init();
+
         mBetSelectionView.setBetListener(this);
     }
 
+
+    private void init(){
+
+        mMatchesAdapter = new MatchesAdapter(this);
+        mMatchesAdapter.setOnItemClickListener(this);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        mRecyclerView.setAdapter(mMatchesAdapter);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        new PagerSnapHelper().attachToRecyclerView(mRecyclerView);
+
+
+        getMatches();
+    }
 
     @Override
     protected void onDestroy() {
@@ -99,16 +117,7 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
 
     private void onMatchesLoaded(List<Match> matches) {
         if (matches != null && matches.size() > 0) {
-            mShownMatch = matches.get(0);
-            mFlagImageLeft.withFlag(R.drawable.flag_russia)
-                    .andText(mShownMatch.team1.name);
-
-            mFlagImageRight.withFlag(R.drawable.flag_russia)
-                    .andText(mShownMatch.team2.name);
-
-            mDateTextView.setDate(mShownMatch.date);
-            SimpleDateFormat vSimpleDateFormat = new SimpleDateFormat("HH:mm", Locale.ITALY);
-            mHourTextView.setText(vSimpleDateFormat.format(mShownMatch.date));
+            mMatchesAdapter.updateData(matches);
         } else {
             //TODO: show placeholder
         }
@@ -140,5 +149,10 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
     @Override
     public void onBetChoosen(Bet.BetResult aBetResult) {
         placeBet(mShownMatch, aBetResult);
+    }
+
+    @Override
+    public void onMatchClicked(Match aMatch) {
+        Log.d(TAG, "onMatchClicked: "+aMatch);
     }
 }
