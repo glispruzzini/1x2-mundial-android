@@ -41,6 +41,7 @@ public class ScoreActivity extends Activity1x2 {
         mTextPlaceHolder = findViewById(R.id.text_placeholder);
         mRecyclerView = findViewById(R.id.recycler_scores);
 
+        init();
     }
 
     @Override
