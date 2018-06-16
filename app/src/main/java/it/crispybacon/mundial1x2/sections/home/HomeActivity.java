@@ -37,7 +37,6 @@ import it.crispybacon.mundial1x2.ui.selector.BetSelectionView;
 import it.crispybacon.mundial1x2.ui.text.DateTextView;
 
 public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSelection,
-    BottomNavigationView.OnNavigationItemSelectedListener,
     MatchesAdapter.OnItemClickListener {
 
     public static Intent getStartIntent(final Context context) {
@@ -50,7 +49,7 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
 
     private RecyclerView mRecyclerView;
     private MatchesAdapter mMatchesAdapter;
-    private BottomNavigationView mMenu;
+
 
     private static final String TAG = "HomeActivity";
     private BetSelectionView mBetSelectionView;
@@ -69,16 +68,15 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
         mBentBackgroundLayout = findViewById(R.id.bottom_container);
         mBetSelectionView = findViewById(R.id.bet_selection_view);
         mRecyclerView = findViewById(R.id.rv_matches);
-        mMenu = findViewById(R.id.navigation_view);
 
         init();
 
         mBetSelectionView.setBetListener(this);
-        mMenu.setOnNavigationItemSelectedListener(this);
     }
 
-
-    private void init(){
+    @Override
+    protected void init() {
+        super.init();
 
         mMatchesAdapter = new MatchesAdapter(this);
         mMatchesAdapter.setOnItemClickListener(this);
@@ -90,6 +88,7 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
 
         getMatches();
     }
+
 
     @Override
     protected void onDestroy() {
@@ -164,21 +163,4 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
         Log.d(TAG, "onMatchClicked: "+aMatch);
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-        switch (item.getItemId()){
-            case R.id.navigation_home:
-                startActivity(HomeActivity.getStartIntent(this));
-                break;
-            case R.id.navigation_results:
-                startActivity(ResultsActivity.getStartIntent(this));
-                break;
-            case R.id.navigation_score:
-                startActivity(HomeActivity.getStartIntent(this));
-                break;
-
-        }
-        return true;
-    }
 }
