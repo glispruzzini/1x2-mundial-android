@@ -14,7 +14,6 @@ import java.util.Locale;
 import it.crispybacon.mundial1x2.R;
 import it.crispybacon.mundial1x2.core.apimodels.Match;
 import it.crispybacon.mundial1x2.ui.imageview.FlagImageView;
-import it.crispybacon.mundial1x2.ui.text.DateTextView;
 
 /**
  * Created by itscap on 15/06/2018.
@@ -58,10 +57,10 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
 
         public void bind(Match aMatch) {
             mFlagImageLeft.withFlag(R.drawable.flag_russia)
-                    .andText(aMatch.team1.name);
+                    .withText(aMatch.team1.name);
 
             mFlagImageRight.withFlag(R.drawable.flag_russia)
-                    .andText(aMatch.team2.name);
+                    .withText(aMatch.team2.name);
 
             mDateTextView.setText(
                     new StringBuilder()

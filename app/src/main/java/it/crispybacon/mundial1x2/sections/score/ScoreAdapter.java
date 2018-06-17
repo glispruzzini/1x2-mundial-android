@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import it.crispybacon.mundial1x2.R;
+import it.crispybacon.mundial1x2.core.apimodels.User;
 import it.crispybacon.mundial1x2.ui.imageview.FlagImageView;
 import it.crispybacon.mundial1x2.ui.imageview.RoundedImageView;
 import it.crispybacon.mundial1x2.ui.text.DateTextView;
@@ -17,10 +18,9 @@ import it.crispybacon.mundial1x2.ui.text.DateTextView;
 /**
  * Created by itscap on 16/06/2018.
  */
-
 public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ScoreViewHolder> {
 
-    private List<Score> mScores;
+    private List<User> mScores;
 
     private OnItemClickListener mOnItemClickListener;
     private Context mContext;
@@ -30,10 +30,8 @@ public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ScoreViewHol
     }
 
     public interface OnItemClickListener {
-        void onScoreClicked(Score aScore);
+        void onScoreClicked(User aScore);
     }
-
-
 
     class ScoreViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -52,10 +50,10 @@ public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ScoreViewHol
 
         }
 
-        public void bind(Score aScore) {
-
-        //TODO
-
+        public void bind(User score) {
+            mTextName.setText(score.uid);
+            mTextScore.setText(score.points);
+            mTextPos.setText(getAdapterPosition() + 1);
         }
 
         @Override
@@ -81,7 +79,7 @@ public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ScoreViewHol
         return null != mScores ? mScores.size() : 0;
     }
 
-    public void updateData(List<Score> aScores) {
+    public void updateData(List<User> aScores) {
 
         if (aScores != null) {
             mScores = aScores;

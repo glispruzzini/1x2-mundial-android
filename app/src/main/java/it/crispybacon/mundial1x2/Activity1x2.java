@@ -18,12 +18,12 @@ import it.crispybacon.mundial1x2.ui.loading.LoadingDialog;
 /**
  * Created by Jameido on 15/06/2018.
  */
-public abstract class Activity1x2 extends AppCompatActivity implements  BottomNavigationView.OnNavigationItemSelectedListener {
+public abstract class Activity1x2 extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private LoadingDialog mLoadingDialog;
 
-    protected void init(){
-        ((BottomNavigationView)findViewById(R.id.navigation_view))
+    protected void init() {
+        ((BottomNavigationView) findViewById(R.id.navigation_view))
                 .setOnNavigationItemSelectedListener(this);
     }
 
@@ -54,7 +54,7 @@ public abstract class Activity1x2 extends AppCompatActivity implements  BottomNa
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.navigation_home:
                 startActivity(HomeActivity.getStartIntent(this));
                 break;
@@ -67,7 +67,8 @@ public abstract class Activity1x2 extends AppCompatActivity implements  BottomNa
 
         }
 
-        overridePendingTransition(R.anim.no_slide,R.anim.no_slide);
+        overridePendingTransition(R.anim.no_slide, R.anim.no_slide);
+        finish();
         return true;
     }
 }

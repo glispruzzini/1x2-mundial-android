@@ -4,5 +4,6 @@
     <string name="score_points">points</string>
     <string name="score_global">globale</string>
     <string name="score_friends">friends</string>
+    <string name="score_format">%d:%d</string>
     <string name="score_no_res_yet">No score yet (ಥ﹏ಥ)</string>
 </resources>
