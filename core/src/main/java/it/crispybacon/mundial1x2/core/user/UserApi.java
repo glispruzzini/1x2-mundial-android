@@ -1,4 +1,6 @@
-package it.crispybacon.mundial1x2.core.authentication;
+package it.crispybacon.mundial1x2.core.user;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import it.crispybacon.mundial1x2.core.apimodels.TokenId;
@@ -13,10 +15,14 @@ public interface UserApi {
 
     String URL_CREATE_USER = "public/user";
     String URL_GET_USER = "public/user/me";
+    String URL_GET_USERS = "public/user";
 
     @POST(URL_CREATE_USER)
     Observable<User> createUser(@Body TokenId tokenId);
 
     @POST(URL_GET_USER)
     Observable<User> getUser();
+
+    @POST(URL_GET_USERS)
+    Observable<List<User>> getUsers();
 }

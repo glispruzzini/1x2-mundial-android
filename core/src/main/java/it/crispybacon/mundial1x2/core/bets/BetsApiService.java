@@ -1,5 +1,7 @@
 package it.crispybacon.mundial1x2.core.bets;
 
+import java.util.List;
+
 import io.reactivex.Observable;
 import it.crispybacon.mundial1x2.core.ApiService;
 import it.crispybacon.mundial1x2.core.Core;
@@ -28,5 +30,10 @@ public class BetsApiService extends ApiService<BetsApi> {
     public Observable<SimpleResponse> placeBet(final Match match, final Bet.BetResult betResult) {
         return getService()
                 .placeBet(new Bet(match, betResult));
+    }
+
+    public Observable<List<Bet>> myBets() {
+        return getService()
+                .myBets();
     }
 }

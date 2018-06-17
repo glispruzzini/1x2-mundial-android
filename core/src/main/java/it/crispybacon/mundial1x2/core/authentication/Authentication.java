@@ -16,6 +16,7 @@ import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import it.crispybacon.mundial1x2.core.Core;
 import it.crispybacon.mundial1x2.core.apimodels.User;
+import it.crispybacon.mundial1x2.core.user.UserApiService;
 
 /**
  * Created by Jameido on 14/06/2018.
@@ -77,7 +78,7 @@ public class Authentication {
                 .flatMap(new Function<AuthResult, ObservableSource<User>>() {
                     @Override
                     public ObservableSource<User> apply(AuthResult authResult) throws Exception {
-                        return createUser();
+                        return getUser();
                     }
                 });
     }

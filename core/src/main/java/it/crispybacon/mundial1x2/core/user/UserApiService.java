@@ -1,4 +1,6 @@
-package it.crispybacon.mundial1x2.core.authentication;
+package it.crispybacon.mundial1x2.core.user;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import it.crispybacon.mundial1x2.core.ApiService;
@@ -32,5 +34,10 @@ public class UserApiService extends ApiService<UserApi> {
     public Observable<User> getUser() {
         return getService()
                 .getUser();
+    }
+
+    public Observable<List<User>> getUsers() {
+        return getService()
+                .getUsers();
     }
 }
