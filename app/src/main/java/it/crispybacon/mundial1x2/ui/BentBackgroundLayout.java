@@ -1,4 +1,4 @@
-package it.crispybacon.mundial1x2.ui.section;
+package it.crispybacon.mundial1x2.ui;
 
 import android.content.Context;
 import android.graphics.Canvas;

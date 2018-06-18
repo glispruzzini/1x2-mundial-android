@@ -60,7 +60,7 @@ public class BetSelectionView extends LinearLayout {
         setOrientation(HORIZONTAL);
 
         setupLeftSection();
-        setupCentralSection();
+        //setupCentralSection();
         setupRightSection();
     }
 
