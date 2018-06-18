@@ -16,7 +16,7 @@
         android:id="@+id/text_pos"
         android:text="0"
         android:textSize="@dimen/text_size_medium_big"
-        android:textColor="@color/colorLightGrey"
+        android:textColor="@color/gray_light"
         android:fontFamily="@font/montserrat_bold"
         android:gravity="center"/>
 
@@ -24,6 +24,7 @@
         android:layout_width="@dimen/icon"
         android:layout_height="@dimen/icon"
         android:id="@+id/img_profile"
+        app:srcCompat="@drawable/placeholder"
         android:layout_marginStart="@dimen/small_margin"
         app:borderColor="@color/white"/>
 

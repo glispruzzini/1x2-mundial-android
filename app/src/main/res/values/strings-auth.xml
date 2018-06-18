@@ -11,4 +11,6 @@
     <string name="auth_register">Sign up</string>
     <string name="auth_success">Authentication successful</string>
     <string name="auth_error">Authentication error</string>
+    <string name="auth_or">or</string>
+    <string name="auth_facebook_login">Sign in with Facebook</string>
 </resources>

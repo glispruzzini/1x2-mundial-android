@@ -1,7 +1,6 @@
 package it.crispybacon.mundial1x2.ui.selector;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
 import android.support.v4.content.res.ResourcesCompat;
@@ -32,7 +31,7 @@ public class BetSelectionView extends LinearLayout {
 
 
     public interface IBetSelection{
-        void onBetChoosen(Bet.BetResult aBetResult);
+        void onBetChosen(Bet.BetResult aBetResult);
     }
 
 
@@ -78,7 +77,7 @@ public class BetSelectionView extends LinearLayout {
             @Override
             public void onClick(View view) {
                 if(mBetListener!=null)
-                    mBetListener.onBetChoosen(Bet.BetResult.HOME);
+                    mBetListener.onBetChosen(Bet.BetResult.HOME);
             }
         });
 
@@ -95,7 +94,7 @@ public class BetSelectionView extends LinearLayout {
             @Override
             public void onClick(View v) {
                 if(mBetListener!=null)
-                    mBetListener.onBetChoosen(Bet.BetResult.TIE);
+                    mBetListener.onBetChosen(Bet.BetResult.TIE);
             }
         });
         addView(mCentralSection);
@@ -115,7 +114,7 @@ public class BetSelectionView extends LinearLayout {
             @Override
             public void onClick(View view) {
                 if(mBetListener!=null)
-                    mBetListener.onBetChoosen(Bet.BetResult.AWAY);
+                    mBetListener.onBetChosen(Bet.BetResult.AWAY);
             }
         });
 

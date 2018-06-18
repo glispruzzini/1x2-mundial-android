@@ -1,15 +1,12 @@
-package it.crispybacon.mundial1x2.core.authentication;
+package it.crispybacon.mundial1x2.core.user;
 
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.Single;
 import it.crispybacon.mundial1x2.core.ApiService;
 import it.crispybacon.mundial1x2.core.Core;
-import it.crispybacon.mundial1x2.core.apimodels.Match;
 import it.crispybacon.mundial1x2.core.apimodels.TokenId;
 import it.crispybacon.mundial1x2.core.apimodels.User;
-import okhttp3.OkHttpClient;
 
 /**
  * Created by Jameido on 15/06/2018.
@@ -29,13 +26,18 @@ public class UserApiService extends ApiService<UserApi> {
         return super.getService(UserApi.class);
     }
 
-    @Override
-    protected OkHttpClient getHttpClient() {
-        return Core.get().getNoAuthHttpClient();
+    public Observable<User> createUser(String token) {
+        return getService()
+                .createUser(new TokenId(token));
     }
 
-    public Observable<User> getUser(String token) {
+    public Observable<User> getUser() {
         return getService()
-                .getUser(new TokenId(token));
+                .getUser();
+    }
+
+    public Observable<List<User>> getUsers() {
+        return getService()
+                .getUsers();
     }
 }

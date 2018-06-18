@@ -26,6 +26,8 @@
     <dimen name="icon_flag_height">60dp</dimen>
     <dimen name="icon">34dp</dimen>
 
+    <dimen name="stroke">2dp</dimen>
+
     <dimen name="bet_selection_view_height">150dp</dimen>
 
 

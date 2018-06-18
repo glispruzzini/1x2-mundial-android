@@ -12,7 +12,6 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
         checkAuthentication();
     }
 
@@ -20,7 +19,7 @@ public class SplashActivity extends AppCompatActivity {
         if (Authentication.get().getFirebaseUser() != null) {
             startActivity(HomeActivity.getStartIntent(this));
         } else {
-            startActivity(AuthenticationActivity.getStartIntent(this));
+            startActivity(LoginActivity.getStartIntent(this));
         }
         finish();
     }

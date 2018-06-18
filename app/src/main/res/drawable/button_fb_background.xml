@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Pressed -->
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/fb_blue" />
+            <stroke android:width="@dimen/stroke" android:color="@color/fb_blue_light" />
+        </shape>
+    </item>
+    <!-- Disabled -->
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/fb_blue_alpha" />
+            <stroke android:width="@dimen/stroke" android:color="@color/fb_blue_light_alpha" />
+        </shape>
+    </item>
+    <!-- Default -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/fb_blue" />
+            <stroke android:width="@dimen/stroke" android:color="@color/fb_blue_light" />
+        </shape>
+    </item>
+</selector>

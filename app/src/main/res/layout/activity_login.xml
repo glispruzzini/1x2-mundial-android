@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/view_root"
+    android:background="@drawable/background_pattern"
+    tools:context=".sections.authentication.LoginActivity">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/big_margin"
+        android:layout_marginStart="@dimen/big_margin"
+        app:layout_constraintBottom_toTopOf="@+id/edit_email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/home_logo" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/edit_email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/mid_small_margin"
+        android:layout_marginEnd="@dimen/big_margin"
+        android:layout_marginStart="@dimen/big_margin"
+        android:background="@drawable/edit_text_background"
+        android:fontFamily="@font/montserrat_semibold"
+        android:hint="@string/auth_email_hint"
+        android:inputType="textEmailAddress"
+        android:padding="@dimen/small_margin"
+        android:textSize="@dimen/text_size_very_small"
+        app:layout_constraintBottom_toTopOf="@+id/edit_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/edit_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/mid_small_margin"
+        android:layout_marginEnd="@dimen/big_margin"
+        android:layout_marginStart="@dimen/big_margin"
+        android:background="@drawable/edit_text_background"
+        android:fontFamily="@font/montserrat_semibold"
+        android:hint="@string/auth_password_hint"
+        android:inputType="textPassword"
+        android:padding="@dimen/small_margin"
+        android:textSize="@dimen/text_size_very_small"
+        app:layout_constraintBottom_toTopOf="@+id/button_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/button_login"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/mid_small_margin"
+        android:layout_marginEnd="@dimen/big_margin"
+        android:layout_marginStart="@dimen/big_margin"
+        android:background="@drawable/button_background"
+        android:fontFamily="@font/montserrat_bold"
+        android:padding="@dimen/small_margin"
+        android:text="@string/auth_login"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_very_small"
+        app:layout_constraintBottom_toTopOf="@+id/button_facebook_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/button_facebook_login"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/smaller_margin"
+        android:layout_marginEnd="@dimen/big_margin"
+        android:layout_marginStart="@dimen/big_margin"
+        android:background="@drawable/button_fb_background"
+        android:padding="@dimen/small_margin"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="@string/auth_facebook_login"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/text_or"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/text_or"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/smallest_margin"
+        android:layout_marginEnd="@dimen/big_margin"
+        android:layout_marginStart="@dimen/big_margin"
+        android:gravity="center"
+        android:text="@string/auth_or"
+        app:layout_constraintBottom_toTopOf="@+id/button_register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/button_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/mid_small_margin"
+        android:layout_marginEnd="@dimen/big_margin"
+        android:layout_marginStart="@dimen/big_margin"
+        android:gravity="center"
+        android:text="@string/auth_register"
+        android:textColor="@color/gold"
+        android:textSize="@dimen/text_size_very_small"
+        app:fontFamily="@font/montserrat_bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:textAllCaps="true" />
+</android.support.constraint.ConstraintLayout>

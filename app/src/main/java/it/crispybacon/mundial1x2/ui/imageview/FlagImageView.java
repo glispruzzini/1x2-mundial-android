@@ -70,7 +70,7 @@ public class FlagImageView extends LinearLayout {
         return this;
     }
 
-    public FlagImageView andText(String aString){
+    public FlagImageView withText(String aString){
         mTextView.setText(aString.toUpperCase());
         return this;
     }
