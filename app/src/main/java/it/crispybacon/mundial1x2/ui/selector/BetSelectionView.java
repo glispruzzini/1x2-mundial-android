@@ -2,21 +2,19 @@ package it.crispybacon.mundial1x2.ui.selector;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import it.crispybacon.mundial1x2.R;
 import it.crispybacon.mundial1x2.core.apimodels.Bet;
-import it.crispybacon.mundial1x2.ui.MeasureHelper;
 
 /**
  * Created by itscap on 15/06/2018.
@@ -25,7 +23,7 @@ import it.crispybacon.mundial1x2.ui.MeasureHelper;
 public class BetSelectionView extends RelativeLayout {
 
     private SectionView mLeftSection;
-    private RoundedSection mCentralSection;
+    private CircularButton mCentralSection;
     private SectionView mRightSection;
 
     private IBetSelection mBetListener;
@@ -57,15 +55,14 @@ public class BetSelectionView extends RelativeLayout {
 
         mLeftSection.setWidth(mWidth/2);
         mRightSection.setWidth(mWidth/2);
-       // mCentralSection.setSize(mHeight/3);
-        mCentralSection.setSize(200);
+        mCentralSection.setSize(mHeight/2);
     }
 
     private void init(AttributeSet attrs) {
 
         setupLeftSection();
-        setupCentralSection();
         setupRightSection();
+        setupCentralSection();
     }
 
     private void setupLeftSection() {
@@ -91,8 +88,7 @@ public class BetSelectionView extends RelativeLayout {
 
     private void setupCentralSection() {
 
-        //TODO get size based on height
-        mCentralSection = new RoundedSection(getContext());
+        mCentralSection = new CircularButton(getContext());
         mCentralSection.setId(View.generateViewId());
         mCentralSection.setText("X");
         mCentralSection.setTextColor(R.color.white);//TODO Porterduff
@@ -132,66 +128,6 @@ public class BetSelectionView extends RelativeLayout {
         mBetListener = aBetListener;
     }
 
-
-    private class RoundedSection extends RelativeLayout {
-
-        private AppCompatTextView mTextView;
-        private Paint mFillerPaint;
-        private int mSize;
-
-        public RoundedSection(Context context) {
-            super(context);
-            mSize = 0;
-            init();
-        }
-
-        @Override
-        protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-            mTextView.setTextSize(mSize*0.15f);
-        }
-
-        @Override
-        protected void onDraw(Canvas canvas) {
-            super.onDraw(canvas);
-            canvas.drawCircle(mSize/2,mSize/2,mSize/2,mFillerPaint);
-        }
-
-        private void init() {
-
-            setWillNotDraw(false);
-            setSize(mSize);
-
-            mTextView = new AppCompatTextView(getContext());
-            mTextView.setId(View.generateViewId());
-            mTextView.setTypeface(ResourcesCompat.getFont(getContext(), R.font.montserrat_bold));
-            RoundedSection.this.addView(mTextView);
-
-            mFillerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            mFillerPaint.setColor(getResources().getColor(R.color.colorAccent));
-        }
-
-        private RoundedSection setText(String aText) {
-            mTextView.setText(aText);
-            RelativeLayout.LayoutParams textParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            textParams.addRule(RelativeLayout.CENTER_IN_PARENT, TRUE);
-            mTextView.setLayoutParams(textParams);
-            return this;
-        }
-
-        private RoundedSection setTextColor(@ColorRes int aColor) {
-            mTextView.setTextColor(getContext().getResources().getColor(aColor));
-            return this;
-        }
-
-        private void setSize(int size){
-            mSize = size;
-            RoundedSection.this.setLayoutParams(new RelativeLayout.LayoutParams(mSize,mSize));
-            RoundedSection.this.requestLayout();
-        }
-
-
-    }
 
     private class SectionView extends RelativeLayout {
 

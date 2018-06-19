@@ -83,28 +83,22 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/basic_profile_info_container"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/small_margin"
-                android:background="#50123123"
                 android:orientation="vertical">
 
                     <android.support.v7.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/rv_matches"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         app:layoutManager="LinearLayoutManager"
                         tools:listitem="@layout/column_match"/>
 
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/text_placeholder"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat_semibold"
-                        android:gravity="center"
-                        android:text="@string/home_no_res_yet"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_size_medium_small"
-                        android:visibility="gone" />
+                        android:id="@+id/place_holder_container"
+                        android:visibility="visible"
+                        android:orientation="vertical"/>
 
             </LinearLayout>
 
@@ -113,6 +107,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/bet_selection_view"
                     android:layout_below="@+id/match_info_container"
+                    android:layout_marginTop="@dimen/smaller_margin"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"/>
 

@@ -9,7 +9,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import java.util.List;
 
@@ -44,10 +46,10 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
 
     private BentBackgroundLayout mBentBackgroundLayout;
     private RoundedImageView mImgProfile;
+    private LinearLayout mMatchesPlaceholder;
     private RecyclerView mRecyclerView;
     private MatchesAdapter mMatchesAdapter;
     private LinearLayoutManager mLinearLayoutManager;
-    private AppCompatTextView mTextPlaceholder;
 
     private StarsView mStarsLives;
 
@@ -67,7 +69,7 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
         mBetSelectionView = findViewById(R.id.bet_selection_view);
         mRecyclerView = findViewById(R.id.rv_matches);
         mStarsLives = findViewById(R.id.view_stars);
-        mTextPlaceholder = findViewById(R.id.text_placeholder);
+        mMatchesPlaceholder = findViewById(R.id.place_holder_container);
 
         init();
 
@@ -78,9 +80,8 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
     @Override
     protected void init() {
         super.init();
-        getUser();
-        showPlaceHolder(false);
         mImgProfile.setImageDrawable(getDrawable(R.drawable.placeholder));
+        getLayoutInflater().inflate(R.layout.column_match,mMatchesPlaceholder);
 
         mMatchesAdapter = new MatchesAdapter(this);
         mMatchesAdapter.setOnItemClickListener(this);
@@ -90,6 +91,8 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         new PagerSnapHelper().attachToRecyclerView(mRecyclerView);
 
+        showPlaceHolder(true);
+        getUser();
         getMatches();
     }
 
@@ -183,13 +186,14 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
 
     private void showPlaceHolder(boolean show){
         if(show){
-            mTextPlaceholder.setVisibility(View.VISIBLE);
+            mMatchesPlaceholder.setVisibility(View.VISIBLE);
             mRecyclerView.setVisibility(View.GONE);
         }else {
-            mTextPlaceholder.setVisibility(View.GONE);
+            mMatchesPlaceholder.setVisibility(View.GONE);
             mRecyclerView.setVisibility(View.VISIBLE);
         }
     }
+
 
     @Override
     public void onBetChosen(Bet.BetResult aBetResult) {
