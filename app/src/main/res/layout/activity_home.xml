@@ -35,7 +35,7 @@
             android:layout_marginBottom="@dimen/big_margin"
             android:layout_marginTop="@dimen/smaller_margin" />
 
-        <it.crispybacon.mundial1x2.ui.section.BentBackgroundLayout
+        <it.crispybacon.mundial1x2.ui.BentBackgroundLayout
             android:id="@+id/bottom_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -83,30 +83,35 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/basic_profile_info_container"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/mid_margin"
                 android:orientation="vertical">
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_matches"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-                    tools:listitem="@layout/column_match" />
+                    <android.support.v7.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rv_matches"
+                        android:visibility="gone"
+                        app:layoutManager="LinearLayoutManager"
+                        tools:listitem="@layout/column_match"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/place_holder_container"
+                        android:visibility="visible"
+                        android:orientation="vertical"/>
 
             </LinearLayout>
 
-            <it.crispybacon.mundial1x2.ui.selector.BetSelectionView
-                android:id="@+id/bet_selection_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_below="@+id/match_info_container"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="@dimen/big_margin"
-                android:gravity="center"
-                android:visibility="visible" />
+                <it.crispybacon.mundial1x2.ui.selector.BetSelectionView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/bet_selection_view"
+                    android:layout_below="@+id/match_info_container"
+                    android:layout_marginTop="@dimen/smaller_margin"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"/>
 
-        </it.crispybacon.mundial1x2.ui.section.BentBackgroundLayout>
+        </it.crispybacon.mundial1x2.ui.BentBackgroundLayout>
 
     </RelativeLayout>
 

@@ -3,11 +3,15 @@ package it.crispybacon.mundial1x2.sections.home;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import java.util.List;
 
@@ -26,7 +30,7 @@ import it.crispybacon.mundial1x2.core.bets.BetsApiService;
 import it.crispybacon.mundial1x2.core.macthes.MatchesApiService;
 import it.crispybacon.mundial1x2.ui.StarsView;
 import it.crispybacon.mundial1x2.ui.imageview.RoundedImageView;
-import it.crispybacon.mundial1x2.ui.section.BentBackgroundLayout;
+import it.crispybacon.mundial1x2.ui.BentBackgroundLayout;
 import it.crispybacon.mundial1x2.ui.selector.BetSelectionView;
 
 public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSelection,
@@ -42,6 +46,7 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
 
     private BentBackgroundLayout mBentBackgroundLayout;
     private RoundedImageView mImgProfile;
+    private LinearLayout mMatchesPlaceholder;
     private RecyclerView mRecyclerView;
     private MatchesAdapter mMatchesAdapter;
     private LinearLayoutManager mLinearLayoutManager;
@@ -64,6 +69,7 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
         mBetSelectionView = findViewById(R.id.bet_selection_view);
         mRecyclerView = findViewById(R.id.rv_matches);
         mStarsLives = findViewById(R.id.view_stars);
+        mMatchesPlaceholder = findViewById(R.id.place_holder_container);
 
         init();
 
@@ -74,9 +80,8 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
     @Override
     protected void init() {
         super.init();
-        getUser();
-
         mImgProfile.setImageDrawable(getDrawable(R.drawable.placeholder));
+        getLayoutInflater().inflate(R.layout.column_match,mMatchesPlaceholder);
 
         mMatchesAdapter = new MatchesAdapter(this);
         mMatchesAdapter.setOnItemClickListener(this);
@@ -86,6 +91,8 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         new PagerSnapHelper().attachToRecyclerView(mRecyclerView);
 
+        showPlaceHolder(true);
+        getUser();
         getMatches();
     }
 
@@ -146,10 +153,10 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
 
     private void onMatchesLoaded(List<Match> matches) {
         if (matches != null && matches.size() > 0) {
+            showPlaceHolder(false);
             mMatchesAdapter.updateData(matches);
-        } else {
-            //TODO: show placeholder
-        }
+        } else
+            showPlaceHolder(true);
     }
 
     private void placeBet(final Match match, final Bet.BetResult betResult) {
@@ -176,6 +183,17 @@ public class HomeActivity extends Activity1x2 implements BetSelectionView.IBetSe
                     });
         }
     }
+
+    private void showPlaceHolder(boolean show){
+        if(show){
+            mMatchesPlaceholder.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
+        }else {
+            mMatchesPlaceholder.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.VISIBLE);
+        }
+    }
+
 
     @Override
     public void onBetChosen(Bet.BetResult aBetResult) {

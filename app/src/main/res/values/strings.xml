@@ -1,15 +1,10 @@
 <resources>
     <string name="app_name">1X2 Mundial</string>
 
-    <!-- Home -->
+    <!-- Menu -->
     <string name="menu_home">Home</string>
-    <string name="menu_results">Risultati</string>
-    <string name="menu_score">Classifica</string>
-
-
-    <!-- Home -->
-    <string name="home_today_matches">PARTITE DI OGGI</string>
-    <string name="bet_placed">You picked %s</string>
+    <string name="menu_results">Results</string>
+    <string name="menu_score">Scores</string>
 
 
 </resources>

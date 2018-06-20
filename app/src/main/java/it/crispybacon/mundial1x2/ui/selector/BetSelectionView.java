@@ -1,14 +1,16 @@
 package it.crispybacon.mundial1x2.ui.selector;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import it.crispybacon.mundial1x2.R;
@@ -18,21 +20,21 @@ import it.crispybacon.mundial1x2.core.apimodels.Bet;
  * Created by itscap on 15/06/2018.
  */
 
-public class BetSelectionView extends LinearLayout {
+public class BetSelectionView extends RelativeLayout {
 
     private SectionView mLeftSection;
-    private SectionView mCentralSection;
+    private CircularButton mCentralSection;
     private SectionView mRightSection;
 
     private IBetSelection mBetListener;
-    private int mSectionWidth;
+    private int mWidth;
+    private int mHeight;
 
 
     public interface IBetSelection{
         void onBetChosen(Bet.BetResult aBetResult);
     }
 
-    private OnBetSelectedListener mOnBetSelectedListener;
 
     public BetSelectionView(Context context) {
         super(context);
@@ -48,29 +50,30 @@ public class BetSelectionView extends LinearLayout {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        mSectionWidth = getMeasuredWidth() / 3;
+        mWidth = getMeasuredWidth();
+        mHeight = getMeasuredHeight();
 
-        mLeftSection.setWidth(mSectionWidth);
-        mCentralSection.setWidth(mSectionWidth);
-        mRightSection.setWidth(mSectionWidth);
+        mLeftSection.setWidth(mWidth/2);
+        mRightSection.setWidth(mWidth/2);
+        mCentralSection.setSize(mHeight/2);
     }
 
     private void init(AttributeSet attrs) {
-        setOrientation(HORIZONTAL);
 
         setupLeftSection();
-        setupCentralSection();
         setupRightSection();
+        setupCentralSection();
     }
 
     private void setupLeftSection() {
         mLeftSection = new SectionView(getContext());
         mLeftSection.setId(View.generateViewId());
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.addRule(RelativeLayout.ALIGN_PARENT_START, RelativeLayout.TRUE);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        params.addRule(ALIGN_PARENT_START,TRUE);
         mLeftSection.setLayoutParams(params);
-        //TODO get background res
-        mLeftSection.setBackground(getResources().getDrawable(R.drawable.flag_russia));
+        mLeftSection.setBackgroundColor(getResources().getColor(R.color.colorLightBlue));
+        mLeftSection.setText("1");
+        mLeftSection.setTextColor(R.color.white);//TODO Porterduff
         addView(mLeftSection);
 
         mLeftSection.setOnClickListener(new OnClickListener() {
@@ -84,15 +87,11 @@ public class BetSelectionView extends LinearLayout {
     }
 
     private void setupCentralSection() {
-        mCentralSection = new SectionView(getContext());
+
+        mCentralSection = new CircularButton(getContext());
         mCentralSection.setId(View.generateViewId());
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.addRule(RelativeLayout.END_OF, mLeftSection.getId());
-        mCentralSection.setLayoutParams(params);
         mCentralSection.setText("X");
-        mCentralSection.setTextColor(R.color.white);
-        //TODO get background res
-        mCentralSection.setBackground(getResources().getDrawable(R.drawable.flag_russia));
+        mCentralSection.setTextColor(R.color.white);//TODO Porterduff
         mCentralSection.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,16 +100,18 @@ public class BetSelectionView extends LinearLayout {
             }
         });
         addView(mCentralSection);
+
     }
 
     private void setupRightSection() {
         mRightSection = new SectionView(getContext());
         mRightSection.setId(View.generateViewId());
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.addRule(RelativeLayout.END_OF, mCentralSection.getId());
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        params.addRule(ALIGN_PARENT_END,TRUE);
         mRightSection.setLayoutParams(params);
-        //TODO get background res
-        mRightSection.setBackground(getResources().getDrawable(R.drawable.flag_russia));
+        mRightSection.setBackgroundColor(getResources().getColor(R.color.colorDarkBlue));
+        mRightSection.setText("2");
+        mRightSection.setTextColor(R.color.white);//TODO Porterduff
         addView(mRightSection);
 
         mRightSection.setOnClickListener(new OnClickListener() {
@@ -128,11 +129,6 @@ public class BetSelectionView extends LinearLayout {
     }
 
 
-
-    public void setOnBetSelectedListener(OnBetSelectedListener onBetSelectedListener) {
-        mOnBetSelectedListener = onBetSelectedListener;
-    }
-
     private class SectionView extends RelativeLayout {
 
         private AppCompatTextView mTextView;
@@ -147,11 +143,13 @@ public class BetSelectionView extends LinearLayout {
         protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-            mTextSize = Math.round(getMeasuredWidth() * 0.15f);
+            mTextSize = Math.round(getMeasuredWidth() * 0.12f);
             mTextView.setTextSize(mTextSize);
         }
 
         private void init() {
+
+            BetSelectionView.this.setWillNotDraw(false);
 
             mTextView = new AppCompatTextView(getContext());
             mTextView.setId(View.generateViewId());
@@ -174,18 +172,12 @@ public class BetSelectionView extends LinearLayout {
         }
 
         private SectionView setWidth(int width) {
-            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) this.getLayoutParams();
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) this.getLayoutParams();
             params.width = width;
             setLayoutParams(params);
             return this;
         }
     }
 
-    public interface OnBetSelectedListener {
-        void onBetSelected1();
 
-        void onBetSelectedX();
-
-        void onBetSelected2();
-    }
 }

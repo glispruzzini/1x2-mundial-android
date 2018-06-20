@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="home_today_matches">Today\'s matches</string>
+    <string name="bet_placed">You picked %s</string>
+    <string name="home_no_res_yet">Unable to get matches  ¯\\_(ツ)_/¯</string>
+
+</resources>
